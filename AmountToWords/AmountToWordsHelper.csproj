@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Samyeak Maharjan</Authors>
+    <Description>Library to convert decimal to corresponding amount in words in English or Unicode as per the specified culture.</Description>
+    <Copyright>Samyeak Maharjan</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Version>1.0.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3" />
+  </ItemGroup>
+
+</Project>
