@@ -7,9 +7,9 @@ namespace AmountToWordsHelper
 {
     public static class ExtensionHelper
     {
-        public static string ToWords(this decimal amount, Culture culture = Culture.English)
+        public static string ToWords(this decimal amount, Culture culture = Culture.English, OutputFormat outputFormat = OutputFormat.English)
         {
-            AmountToWords amountToWords = new AmountToWords(culture);
+            AmountToWords amountToWords = new AmountToWords(culture, outputFormat);
 
             string words = amountToWords.ConvertToWords(amount);
 

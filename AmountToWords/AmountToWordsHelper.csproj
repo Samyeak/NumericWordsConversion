@@ -1,17 +1,39 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Samyeak Maharjan</Authors>
-    <Description>Library to convert decimal to corresponding amount in words in English or Unicode as per the specified culture.</Description>
+    <Description>Amount To Words Library for English and Nepali Number System with output in English, Nepali Unicode as well as Devnagari Format.</Description>
     <Copyright>Samyeak Maharjan</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
     <Version>1.0.0.0</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Samyeak/AmountToWords.git</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Samyeak/AmountToWords.git</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageTags>ToWords; AmountToWords; Nepali; Devnagari; Unicode; DecimalToWords; Nepali Number To Words; Amount To Words;</PackageTags>
+    <PackageReleaseNotes>**Amount To Words Library for English and Nepali Number System**
+* Supports output in English, Nepali Unicode as well as Devnagari System
+* Supports input upto the max number suppored by the decimal type</PackageReleaseNotes>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>AmountToWordsSignatureKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
