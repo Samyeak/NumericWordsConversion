@@ -1,4 +1,6 @@
-﻿namespace AmountToWordsHelper
+﻿using System.Drawing;
+
+namespace AmountToWordsHelper
 {
     using System;
     using System.Globalization;
@@ -11,10 +13,18 @@
         private readonly string _subAmtUnit;
         private readonly string _postfix;
         private readonly Culture _culture;
+        private readonly OutputFormat _outputFormat;
 
         //SCALES make readonly
-        private string[] scale = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha" };
+        private readonly string[] scale = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha" };
         private readonly string[] scaleNep = { "", "सय", "हजार", "लाख", "करोड", "अरब", "खरब", "नील", "पद्म", "शंख" };
+
+        private readonly string[] scaleEng =
+        {
+            "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion",
+            "septillion", "octillion"
+            , "nonillion"
+        };
 
         //ENGLISH WORDS RESOURCE
         private readonly string[] ones = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
@@ -45,59 +55,38 @@
             English,
             Nepali
         }
-
-        private string PaisaToWords(string paisa, OutputFormat outputFormat)
-        {
-            if (Convert.ToInt16(paisa, CultureInfo.InvariantCulture) > 0)
-            {
-                int dec = Convert.ToInt16(paisa, CultureInfo.InvariantCulture);
-                string paisaInWords;
-
-                if (dec < 1)
-                {
-                    paisaInWords = string.Empty;
-                }
-                else
-                {
-                    if (dec < GetResourceLimitIndex(outputFormat))
-                    {
-                        paisaInWords = ones[dec];
-                    }
-                    else
-                    {
-                        if (dec % 10 == 0)
-                        {
-                            paisaInWords = tens[dec / 10];
-                        }
-                        else
-                        {
-                            var index = dec.ToString(CultureInfo.InvariantCulture).ToCharArray();
-                            paisaInWords = string.Concat(tens[Convert.ToInt16(index[0].ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)], " ", ones[Convert.ToInt16(index[1].ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)]);
-                        }
-                    }
-                }
-                return string.Concat(paisaInWords, " ", _subAmtUnit);
-            }
-            return string.Empty;
-        }
-
         private int GetResourceLimitIndex(OutputFormat outputFormat) => outputFormat == OutputFormat.English ? 20 : 100;
 
-        public AmountToWords(Culture culture)
+        public AmountToWords(Culture culture) : this(culture, OutputFormat.English) { }
+        public AmountToWords() : this(Culture.English, OutputFormat.English) { }
+
+        public AmountToWords(Culture culture, OutputFormat outputFormat)
         {
             _culture = culture;
             switch (culture)
             {
                 case Culture.Nepali:
-                    ones = onesNep;
-                    tens = tensNep;
-                    scale = scaleNep;
+                    if (outputFormat == OutputFormat.English)
+                    {
+                        _amtUnit = "rupees";
+                        _subAmtUnit = "paisa";
+                        _postfix = "only";
+                    }
+                    else
+                    {
+                        ones = onesNep;
+                        tens = tensNep;
+                        scale = scaleNep;
+                        _outputFormat = OutputFormat.Unicode;
 
-                    _amtUnit = "रूपैयाँ";
-                    _subAmtUnit = "पैसा";
-                    _postfix = "मात्र";
+                        _amtUnit = "रूपैयाँ";
+                        _subAmtUnit = "पैसा";
+                        _postfix = "मात्र";
+                    }
                     break;
                 case Culture.English:
+                    _outputFormat = OutputFormat.English;
+                    scale = scaleEng;
                     _amtUnit = "rupees";
                     _subAmtUnit = "paisa";
                     _postfix = "only";
@@ -106,7 +95,6 @@
                     throw new ArgumentOutOfRangeException(nameof(culture), culture, "Invalid Culture in AmountToWords");
             }
         }
-        public AmountToWords() : this(Culture.English) { }
         public AmountToWords(Culture culture, string amountUnit, string subAmountUnit) : this(culture)
         {
             _amtUnit = amountUnit;
@@ -120,66 +108,56 @@
         /// <returns></returns>
         public string ConvertToWords(decimal amt)
         {
-            ValidateInputDecimal(amt);
-
-            OutputFormat outputFormat = _culture == Culture.English ? OutputFormat.English : OutputFormat.Unicode;
+            ValidateInputDecimal(amt, _culture);
+            if (amt <= 0) return string.Empty;
 
             StringBuilder wordBuilder = new StringBuilder();
             string inWords;
 
-            string amtstring = $"{amt:F2}";
-            string[] amount = amtstring.Split('.');
+            string[] amount = $"{amt:F2}".Split('.');
             string number = amount[0];
-            //11,22,33,123
-            int upperScale = number.Length / 2;
-            if (amt < 1)
             {
-                inWords = PaisaToWords(amount[1], outputFormat);
-            }
-            else
-            {
+                int scaleMapIndex = 0;
                 string wholeNumber = number;
+                if (number != "0")
+                    if (_culture == Culture.English)
+                        scaleMapIndex = (int)Math.Ceiling((decimal)number.Length / 3);
+                    else
+                        scaleMapIndex = (int)Math.Ceiling((decimal)(number.Length - 1) / 2);
 
-                for (int i = upperScale; i >= 0; i--)
+                for (int i = scaleMapIndex; i >= 0; i--)
                 {
                     switch (i)
                     {
                         case 0: //For the Decimals
                             string paisa = amount[1];
                             if (Convert.ToInt16(paisa, CultureInfo.InvariantCulture) > 0)
-                                wordBuilder.Append(" " + PaisaToWords(paisa, outputFormat));
+                                wordBuilder.Append(" " + ToTensWord(paisa, _outputFormat) + " " + _subAmtUnit);
                             break;
                         case 1: //For the Hundreds, tens and ones
                                 //check 0
-                            inWords = ToHundredthWords(wholeNumber, outputFormat);
-                            wordBuilder.Append(string.Concat(inWords, " ", _amtUnit));
+                            inWords = ToHundredthWords(wholeNumber, _outputFormat);
+                            if (!string.IsNullOrEmpty(inWords))
+                                wordBuilder.Append(string.Concat(inWords.Trim(), " "));
+                            wordBuilder.Append(_amtUnit);
                             break;
                         default: //For Everything Greater than hundreds
-                            string digits;
-                            digits = wholeNumber.Substring(0, 2);
-                            wholeNumber = wholeNumber.Remove(0, 2);
-                            int value = Convert.ToInt16(digits, CultureInfo.InvariantCulture);
-
-                            if (value == 0)
+                            if (_culture == Culture.English)
                             {
-                                continue;
-                            }
-                            else if (value < GetResourceLimitIndex(outputFormat))
-                            {
-                                inWords = ones[value];
-                            }
-                            else if (value % 10 == 0)
-                            {
-                                inWords = tens[value / 10];
+                                int lastIndex = (wholeNumber.Length % ((i - 1) * 3 + 1)) + 1;
+                                string hundreds = wholeNumber.Substring(0, lastIndex);
+                                wholeNumber = wholeNumber.Remove(0, lastIndex);
+                                inWords = ToHundredthWords(hundreds, _outputFormat);
                             }
                             else
                             {
-                                int first = Convert.ToInt16(digits.Substring(0, 1), CultureInfo.InvariantCulture);
-                                int second = Convert.ToInt16(digits.Substring(1, 1), CultureInfo.InvariantCulture);
-                                inWords = string.Concat(tens[first], " ", ones[second]);
+                                string digits = wholeNumber.Substring(0, 2);
+                                wholeNumber = wholeNumber.Remove(0, 2);
+                                inWords = ToTensWord(digits, _outputFormat);
                             }
 
-                            wordBuilder.Append(string.Concat(inWords, " ", scale[i], " "));
+                            if (!string.IsNullOrEmpty(inWords.Trim()))
+                                wordBuilder.Append(string.Concat(inWords.Trim(), " ", scale[i], " "));
                             break;
                     }
                 }
@@ -187,61 +165,35 @@
             }
             inWords = string.Concat(inWords, " ", _postfix);
 
-            return CapitalizeFirstLetter(inWords);
+            return CapitalizeFirstLetter(inWords.Trim());
         }
 
-        public string ConvertToEnglishWords(decimal amt)
+
+        private string ToTensWord(string tenth, OutputFormat outputFormat)
         {
-            ValidateInputDecimal(amt);
-            scale = new []{ "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion" };
+            int dec = Convert.ToInt16(tenth, CultureInfo.InvariantCulture);
+            if (dec <= 0) return string.Empty;
+            string words;
 
-            OutputFormat outputFormat = _culture == Culture.English ? OutputFormat.English : OutputFormat.Unicode;
-
-            StringBuilder wordBuilder = new StringBuilder();
-            string inWords;
-
-            string amtstring = $"{amt:F2}";
-            string[] amount = amtstring.Split('.');
-            string number = amount[0];
-            //111,222,333,123
-            int upperScale = number.Length / 3;
-            if (amt < 1)
+            if (dec < GetResourceLimitIndex(outputFormat))
             {
-                inWords = PaisaToWords(amount[1], outputFormat);
+                words = ones[dec];
             }
             else
             {
-                string wholeNumber = number;
-
-                for (int i = upperScale; i >= 0; i--)
+                if (dec % 10 == 0)
                 {
-                    switch (i)
-                    {
-                        case 0: //For the Decimals
-                            string paisa = amount[1];
-                            if (Convert.ToInt16(paisa, CultureInfo.InvariantCulture) > 0)
-                                wordBuilder.Append(" " + PaisaToWords(paisa, outputFormat));
-                            break;
-                        case 1: //For the Hundreds, tens and ones
-                                //check 0
-                            inWords = ToHundredthWords(wholeNumber, outputFormat);
-                            wordBuilder.Append(string.Concat(inWords, " ", _amtUnit));
-                            break;
-                        default: //For Everything Greater than hundreds
-                            string hundreds = wholeNumber.Substring(0, 3);
-                            wholeNumber = wholeNumber.Remove(0, 3);
-                            inWords = ToHundredthWords(hundreds, outputFormat);
-                            //wordBuilder.Append(string.Concat(inWords, " ", _amtUnit));
-
-                            wordBuilder.Append(string.Concat(inWords, " ", scale[i], " "));
-                            break;
-                    }
+                    words = tens[dec / 10];
                 }
-                inWords = wordBuilder.ToString();
+                else
+                {
+                    int first = Convert.ToInt16(tenth.Substring(0, 1), CultureInfo.InvariantCulture);
+                    int second = Convert.ToInt16(tenth.Substring(1, 1), CultureInfo.InvariantCulture);
+                    words = string.Concat(tens[first], " ", ones[second]);
+                }
             }
-            inWords = string.Concat(inWords, " ", _postfix);
 
-            return CapitalizeFirstLetter(inWords);
+            return words;
         }
 
         private string ToHundredthWords(string hundred, OutputFormat outputFormat)
@@ -250,15 +202,13 @@
             if (hundred.Length == 3)
             {
                 int hundredth = Convert.ToInt16(hundred.Substring(0, 1), CultureInfo.InvariantCulture);
-                int tensAmount = Convert.ToInt16(hundred.Substring(1, 2), CultureInfo.InvariantCulture);
-                int tenth = Convert.ToInt16(hundred.Substring(1, 1), CultureInfo.InvariantCulture);
-                int oneth = Convert.ToInt16(hundred.Substring(2, 1), CultureInfo.InvariantCulture);
-
                 inWords = hundredth > 0 ? string.Concat(ones[hundredth], " ", scale[1], " ") : string.Empty;
-                inWords += tensAmount > 0 ? (tensAmount < GetResourceLimitIndex(outputFormat) ? ones[tensAmount] : string.Concat(tens[tenth], " ", ones[oneth])) : string.Empty;
+                hundred = hundred.Substring(1, 2);
             }
 
-            return inWords;
+            inWords += ToTensWord(hundred, outputFormat);
+
+            return inWords.Trim();
         }
 
         private static string CapitalizeFirstLetter(string input)
@@ -267,11 +217,14 @@
             if (string.IsNullOrEmpty(input)) throw new ArgumentException("Amount in words cannot be empty");
             return input.First().ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture) + input.Substring(1);
         }
-        private static void ValidateInputDecimal(decimal amt)
+        private static void ValidateInputDecimal(decimal amt, Culture culture)
         {
             string[] amountStr = amt.ToString(CultureInfo.InvariantCulture).Split('.');
-            if (amountStr[0].Length > 19)
-                throw new Exception("Input digits exceeds maximum supported length(max:19)");
+            if (culture == Culture.Nepali)
+            {
+                if (amountStr[0].Length > 19)
+                    throw new Exception("Input digits exceeds maximum supported length(max:19)");
+            }
         }
 
 

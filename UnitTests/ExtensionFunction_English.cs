@@ -20,13 +20,13 @@ namespace UnitTests
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [Test]
-        public void MaxLengthException()
-        {
-            decimal amt = 9_88_77_66_55_44_33_22_11_321M;
-            TestDelegate testDelegate = new TestDelegate(() => amt.ToWords());
-            Assert.Throws<Exception>(testDelegate, "Input digits exceeds maximum supported length(max:19)");
-        }
+        //[Test]
+        //public void MaxLengthException()
+        //{
+        //    decimal amt = 9_88_77_66_55_44_33_22_11_321M;
+        //    TestDelegate testDelegate = new TestDelegate(() => amt.ToWords());
+        //    Assert.Throws<Exception>(testDelegate, "Input digits exceeds maximum supported length(max:19)");
+        //}
 
         [Test]
         public void ThreeDigitFloorPaisa()
@@ -49,8 +49,8 @@ namespace UnitTests
         [Test]
         public void ShankhaExtension()
         {
-            decimal amt = 8877665544332211321.99M;
-            string expectedResult = "Eighty eight shankha seventy seven padma sixty six neel fifty five kharba forty four arba thirty three crore twenty two lakh eleven thousand three hundred twenty one rupees ninety nine paisa only";
+            decimal amt = 9_800_777_660_544_100_110_321.99M;
+            string expectedResult = "Nine sextillion eight hundred quintillion seven hundred seventy seven quadrillion six hundred sixty trillion five hundred forty four billion one hundred million one hundred ten thousand three hundred twenty one rupees ninety nine paisa only";
             string actualResult = amt.ToWords();
             Assert.AreEqual(expectedResult, actualResult);
         }

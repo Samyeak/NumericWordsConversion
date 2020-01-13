@@ -23,7 +23,7 @@ namespace AmountToWordsHelper
         /// <returns></returns>
         public static string ToUnicodeWords(this decimal amount)
         {
-            AmountToWords amountToWords = new AmountToWords(Culture.Nepali);
+            AmountToWords amountToWords = new AmountToWords(Culture.Nepali, OutputFormat.Unicode);
             string words = amountToWords.ConvertToWords(amount);
             return words;
         }

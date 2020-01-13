@@ -11,7 +11,7 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            amtToWords = new AmountToWords(AmountToWords.Culture.Nepali);
+            amtToWords = new AmountToWords(AmountToWords.Culture.Nepali, AmountToWords.OutputFormat.Unicode);
         }
 
         [Test]
