@@ -15,16 +15,13 @@ namespace AmountToWordsHelper
         private readonly Culture _culture;
         private readonly OutputFormat _outputFormat;
 
-        //SCALES make readonly
-        private readonly string[] scale = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha" };
-        private readonly string[] scaleNep = { "", "सय", "हजार", "लाख", "करोड", "अरब", "खरब", "नील", "पद्म", "शंख" };
-
-        private readonly string[] scaleEng =
-        {
-            "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion",
-            "septillion", "octillion"
-            , "nonillion"
-        };
+        /**
+         * Number Notation has been added up to 10^39
+         * Decimal type supports up to 10^27
+         */
+        private readonly string[] scale = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha", "Upadh", "Anka", "Jald", "Madh", "Parardha", "Anta", "Mahaanta", "Shishanta", "Singhar", "Maha Singhar", "Adanta Singhar" }; //Pow(10,39)
+        private readonly string[] scaleNep = { "", "सय", "हजार", "लाख", "करोड", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
+        private readonly string[] scaleEng = { "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion" , "nonillion", "decillion", "undecillion", "duodecillion " };
 
         //ENGLISH WORDS RESOURCE
         private readonly string[] ones = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
@@ -123,7 +120,7 @@ namespace AmountToWordsHelper
                     if (_culture == Culture.English)
                         scaleMapIndex = (int)Math.Ceiling((decimal)number.Length / 3);
                     else
-                        scaleMapIndex = (int)Math.Ceiling((decimal)(number.Length - 1) / 2);
+                        scaleMapIndex = (number.Length - 3) < 1 ? 1 : (int)Math.Floor((decimal)(number.Length) / 2);
 
                 for (int i = scaleMapIndex; i >= 0; i--)
                 {
@@ -135,7 +132,6 @@ namespace AmountToWordsHelper
                                 wordBuilder.Append(" " + ToTensWord(paisa, _outputFormat) + " " + _subAmtUnit);
                             break;
                         case 1: //For the Hundreds, tens and ones
-                                //check 0
                             inWords = ToHundredthWords(wholeNumber, _outputFormat);
                             if (!string.IsNullOrEmpty(inWords))
                                 wordBuilder.Append(string.Concat(inWords.Trim(), " "));
@@ -151,8 +147,9 @@ namespace AmountToWordsHelper
                             }
                             else
                             {
-                                string digits = wholeNumber.Substring(0, 2);
-                                wholeNumber = wholeNumber.Remove(0, 2);
+                                int length = (wholeNumber.Length % 2 == 0) ? 1 : 2;
+                                string digits = wholeNumber.Substring(0, length);
+                                wholeNumber = wholeNumber.Remove(0, length);
                                 inWords = ToTensWord(digits, _outputFormat);
                             }
 
@@ -220,11 +217,11 @@ namespace AmountToWordsHelper
         private static void ValidateInputDecimal(decimal amt, Culture culture)
         {
             string[] amountStr = amt.ToString(CultureInfo.InvariantCulture).Split('.');
-            if (culture == Culture.Nepali)
-            {
-                if (amountStr[0].Length > 19)
-                    throw new Exception("Input digits exceeds maximum supported length(max:19)");
-            }
+            //if (culture == Culture.Nepali)
+            //{
+            //    if (amountStr[0].Length > 19)
+            //        throw new Exception("Input digits exceeds maximum supported length(max:19)");
+            //}
         }
 
 
