@@ -16,7 +16,7 @@
     <PackageReleaseNotes>**Amount To Words Library for English and Nepali Number System**
 * Supports output in English, Nepali Unicode as well as Devnagari System
 * Supports input upto the max number suppored by the decimal type</PackageReleaseNotes>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>AmountToWordsSignatureKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -24,10 +24,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>true</Optimize>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\LICENSE">
