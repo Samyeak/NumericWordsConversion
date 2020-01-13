@@ -15,7 +15,7 @@ namespace UnitTests
             Assert.AreEqual(words, result);
         }
 
-        static object[] WordCases =
+        private static readonly object[] WordCases =
         {
             new object[] { 0M, "" },
             new object[] { 0.01M, "One paisa only" },

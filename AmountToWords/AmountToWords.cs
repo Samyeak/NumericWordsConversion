@@ -21,6 +21,7 @@ namespace AmountToWordsHelper
          */
         private readonly string[] scale = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha", "Upadh", "Anka", "Jald", "Madh", "Parardha", "Anta", "Mahaanta", "Shishanta", "Singhar", "Maha Singhar", "Adanta Singhar" }; //Pow(10,39)
         private readonly string[] scaleNep = { "", "सय", "हजार", "लाख", "करोड", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
+        private readonly string[] scaleDevnagari = { "", ";o", "xhf/", "nfv", "s/f]8", "c/a", "v/a", "gLn", "kß", "z+v", "pkfw", "c+s", "hNb", "dw", "k/w{", "cGt", "dxfcGt", "lzzGt", "l;+3/", "dxfl;+x/", "cbGt l;+x/" };
         private readonly string[] scaleEng = { "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion" , "nonillion", "decillion", "undecillion", "duodecillion " };
 
         //ENGLISH WORDS RESOURCE
@@ -29,17 +30,30 @@ namespace AmountToWordsHelper
 
         //NEPALI WORDS RESOURCE
         private readonly string[] tensNep = { "", "दस", "बीस", "तीस", "चालीस", "पचास", "साठी", "सतरी", "अस्सी", "नब्बे" };
+        private readonly string[] tensDevnagari = { "", "b;", "aL;", "tL;", "rfnL;", "krf;", ";f7L", ";t/L", "c:;L", "gAa]" };
         private readonly string[] onesNep = new[]{ "सुन्य", "एक", "दुई", "तीन", "चार", "पाँच", "छ", "सात", "आठ", "नौ", "दस",
                 "एघार", "बाह्र", "तेह्र", "चौध", "पन्ध्र", "सोह्र", "सत्र", "अठाह्र", "उन्नाइस", "बीस", "एकाइस",
                 "बाइस", "तेइस", "चौबीस", "पचीस", "छब्बीस", "सत्ताइस", "अठ्ठाइस", "उनन्तीस", "तीस",
                 "एकतीस", "बतीस", "तेतीस", "चौतीस", "पैतीस", "छतीस", "सरतीस", "अरतीस", "उननचालीस", "चालीस",
                 "एकचालीस", "बयालिस", "तीरचालीस", "चौवालिस", "पैंतालिस", "छयालिस", "सरचालीस", "अरचालीस", "उननचास", "पचास",
-                "एकाउन्न", "बाउन्न", "त्रिपन्न", "चौवन्न", "पच्पन्न", "छपन्न", "सन्ताउन्न", "अन्ठाउँन्न", "उनान्न्साठी ", "साठी",
+                "एकाउन्न", "बाउन्न", "त्रिपन्न", "चौवन्न", "पच्पन्न", "छपन्न", "सन्ताउन्न", "अन्ठाउँन्न", "उनान्न्साठी", "साठी",
                 "एकसाठी", "बासाठी", "तीरसाठी", "चौंसाठी", "पैसाठी", "छैसठी", "सत्सठ्ठी", "अर्सठ्ठी", "उनन्सत्तरी", "सतरी",
                 "एकहत्तर", "बहत्तर", "त्रिहत्तर", "चौहत्तर", "पचहत्तर", "छहत्तर", "सत्हत्तर", "अठ्हत्तर", "उनास्सी", "अस्सी",
                 "एकासी", "बयासी", "त्रीयासी", "चौरासी", "पचासी", "छयासी", "सतासी", "अठासी", "उनान्नब्बे", "नब्बे",
                 "एकान्नब्बे", "बयान्नब्बे", "त्रियान्नब्बे", "चौरान्नब्बे", "पंचान्नब्बे", "छयान्नब्बे", "सन्तान्‍नब्बे", "अन्ठान्नब्बे", "उनान्सय"
             };
+        private readonly string[] onesDevnagari = new[]{ ";'Go", "Ps", "b'O{", "tLg", "rf/", "kfFr", "5", ";ft", "cf7", "gf}", "b;",
+            "P3f/", "afx|", "t]x|", "rf}w", "kG„", ";f]x|", ";q", "c7fx|", "pGgfO;", "aL;", "PsfO;",
+            "afO;", "t]O;", "rf}aL;", "krL;", "5AaL;", ";QfO;", "c¶fO;", "pgGtL;", "tL;",
+            "PstL;", "atL;", "t]tL;", "rf}tL;", "k}tL;", "5tL;", ";/tL;", "c/tL;", "pggrfnL;", "rfnL;",
+            "PsrfnL;", "aofln;", "tL/rfnL;", "rf}jfln;", "k}+tfln;", "5ofln;", ";/rfnL;", "c/rfnL;", "pggrf;", "krf;",
+            "PsfpGg", "afpGg", "lqkGg", "rf}jGg", "kRkGg", "5kGg", ";GtfpGg", "cG7fpFGg", @"pgfGg\;f7L", ";f7L",
+            "Ps;f7L", "af;f7L", "tL/;f7L", "rf}+;f7L", "k};f7L", "5};7L", ";T;¶L", "c;{¶L", "pgG;Q/L", ";t/L",
+            "PsxQ/", "axQ/", "lqxQ/", "rf}xQ/", "krxQ/", "5xQ/", ";TxQ/", @"c7\xQ/", "pgf:;L", "c:;L",
+            "Psf;L", "aof;L", "qLof;L", "rf}/f;L", "krf;L", "5of;L", ";tf;L", "c7f;L", "pgfGgAa]", "gAa]",
+            "PsfGgAa]", "aofGgAa]", "lqofGgAa]", "rf}/fGgAa]", "k+rfGgAa]", "5ofGgAa]", ";GtfG‍gAa]", "cG7fGgAa]", "pgfG;o"
+        };
+
 
         public enum OutputFormat
         {
@@ -63,22 +77,33 @@ namespace AmountToWordsHelper
             switch (culture)
             {
                 case Culture.Nepali:
-                    if (outputFormat == OutputFormat.English)
+                    switch (outputFormat)
                     {
-                        _amtUnit = "rupees";
-                        _subAmtUnit = "paisa";
-                        _postfix = "only";
-                    }
-                    else
-                    {
-                        ones = onesNep;
-                        tens = tensNep;
-                        scale = scaleNep;
-                        _outputFormat = OutputFormat.Unicode;
+                        case OutputFormat.English:
+                            _amtUnit = "rupees";
+                            _subAmtUnit = "paisa";
+                            _postfix = "only";
+                            break;
+                        case OutputFormat.Unicode:
+                            _outputFormat = OutputFormat.Unicode;
+                            ones = onesNep;
+                            tens = tensNep;
+                            scale = scaleNep;
 
-                        _amtUnit = "रूपैयाँ";
-                        _subAmtUnit = "पैसा";
-                        _postfix = "मात्र";
+                            _amtUnit = "रूपैयाँ";
+                            _subAmtUnit = "पैसा";
+                            _postfix = "मात्र";
+                            break;
+                        case OutputFormat.Devnagari:
+                            _outputFormat = OutputFormat.Devnagari;
+                            ones = onesDevnagari;
+                            tens = tensDevnagari;
+                            scale = scaleDevnagari;
+
+                            _amtUnit = "¿k}ofF";
+                            _subAmtUnit = "k};f";
+                            _postfix = "dfq";
+                            break;
                     }
                     break;
                 case Culture.English:
@@ -105,7 +130,6 @@ namespace AmountToWordsHelper
         /// <returns></returns>
         public string ConvertToWords(decimal amt)
         {
-            ValidateInputDecimal(amt, _culture);
             if (amt <= 0) return string.Empty;
 
             StringBuilder wordBuilder = new StringBuilder();
@@ -163,8 +187,15 @@ namespace AmountToWordsHelper
             inWords = string.Concat(inWords, " ", _postfix);
 
             return CapitalizeFirstLetter(inWords.Trim());
-        }
 
+            //Local Functions
+            string CapitalizeFirstLetter(string input)
+            {
+                if (input == null) throw new ArgumentNullException("amount", "Amount in words must not be null");
+                if (string.IsNullOrEmpty(input)) throw new ArgumentException("Amount in words cannot be empty");
+                return input.First().ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture) + input.Substring(1);
+            }
+        }
 
         private string ToTensWord(string tenth, OutputFormat outputFormat)
         {
@@ -207,23 +238,6 @@ namespace AmountToWordsHelper
 
             return inWords.Trim();
         }
-
-        private static string CapitalizeFirstLetter(string input)
-        {
-            if (input == null) throw new ArgumentNullException("amount", "Amount in words must not be null");
-            if (string.IsNullOrEmpty(input)) throw new ArgumentException("Amount in words cannot be empty");
-            return input.First().ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture) + input.Substring(1);
-        }
-        private static void ValidateInputDecimal(decimal amt, Culture culture)
-        {
-            string[] amountStr = amt.ToString(CultureInfo.InvariantCulture).Split('.');
-            //if (culture == Culture.Nepali)
-            //{
-            //    if (amountStr[0].Length > 19)
-            //        throw new Exception("Input digits exceeds maximum supported length(max:19)");
-            //}
-        }
-
 
     }
 

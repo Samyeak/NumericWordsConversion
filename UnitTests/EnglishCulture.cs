@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using AmountToWordsHelper;
+﻿using AmountToWordsHelper;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -23,7 +22,7 @@ namespace UnitTests
             return result;
         }
 
-        static object[] EnglishWordCases =
+        private static readonly object[] EnglishWordCases =
         {
             new object[] { 0M, "" },
             new object[] { 0.01M, "One paisa only" },
@@ -132,7 +131,7 @@ namespace UnitTests
             new object[] { 10_000_000_000_000_000_000_000_000_000M, "Ten octillion rupees only" },
         };
 
-        private static TestCaseData[] TestCases =
+        private static readonly TestCaseData[] TestCases =
         {
             new TestCaseData(0M).Returns(""),
         };
