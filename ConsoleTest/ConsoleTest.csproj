@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AmountToWords\AmountToWordsHelper.csproj" />
+    <PackageReference Include="AmountToWordsHelper" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

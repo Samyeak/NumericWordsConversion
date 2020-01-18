@@ -18,6 +18,8 @@ namespace ConsoleTest
             string max = amount.ToUnicodeWords();
 
             AmountToWords amt = new AmountToWords(AmountToWords.Culture.English);
+            Console.WriteLine(amt.ConvertToWords(234.75M));
+            Console.ReadKey();
             //var result = amt.ConvertToEnglishWords(111_222_333_444M);
         }
     }
