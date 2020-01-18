@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace AmountToWordsHelper
+﻿namespace AmountToWordsHelper
 {
     using System;
     using System.Globalization;
@@ -15,44 +13,10 @@ namespace AmountToWordsHelper
         private readonly Culture _culture;
         private readonly OutputFormat _outputFormat;
 
-        /**
-         * Number Notation has been added up to 10^39
-         * Decimal type supports up to 10^27
-         */
-        private readonly string[] scale = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha", "Upadh", "Anka", "Jald", "Madh", "Parardha", "Anta", "Mahaanta", "Shishanta", "Singhar", "Maha Singhar", "Adanta Singhar" }; //Pow(10,39)
-        private readonly string[] scaleNep = { "", "सय", "हजार", "लाख", "करोड", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
-        private readonly string[] scaleDevnagari = { "", ";o", "xhf/", "nfv", "s/f]8", "c/a", "v/a", "gLn", "kß", "z+v", "pkfw", "c+s", "hNb", "dw", "k/w{", "cGt", "dxfcGt", "lzzGt", "l;+3/", "dxfl;+x/", "cbGt l;+x/" };
-        private readonly string[] scaleEng = { "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion" , "nonillion", "decillion", "undecillion", "duodecillion " };
 
-        //ENGLISH WORDS RESOURCE
-        private readonly string[] ones = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-        private readonly string[] tens = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-
-        //NEPALI WORDS RESOURCE
-        private readonly string[] tensNep = { "", "दस", "बीस", "तीस", "चालीस", "पचास", "साठी", "सतरी", "अस्सी", "नब्बे" };
-        private readonly string[] tensDevnagari = { "", "b;", "aL;", "tL;", "rfnL;", "krf;", ";f7L", ";t/L", "c:;L", "gAa]" };
-        private readonly string[] onesNep = new[]{ "सुन्य", "एक", "दुई", "तीन", "चार", "पाँच", "छ", "सात", "आठ", "नौ", "दस",
-                "एघार", "बाह्र", "तेह्र", "चौध", "पन्ध्र", "सोह्र", "सत्र", "अठाह्र", "उन्नाइस", "बीस", "एकाइस",
-                "बाइस", "तेइस", "चौबीस", "पचीस", "छब्बीस", "सत्ताइस", "अठ्ठाइस", "उनन्तीस", "तीस",
-                "एकतीस", "बतीस", "तेतीस", "चौतीस", "पैतीस", "छतीस", "सरतीस", "अरतीस", "उननचालीस", "चालीस",
-                "एकचालीस", "बयालिस", "तीरचालीस", "चौवालिस", "पैंतालिस", "छयालिस", "सरचालीस", "अरचालीस", "उननचास", "पचास",
-                "एकाउन्न", "बाउन्न", "त्रिपन्न", "चौवन्न", "पच्पन्न", "छपन्न", "सन्ताउन्न", "अन्ठाउँन्न", "उनान्न्साठी", "साठी",
-                "एकसाठी", "बासाठी", "तीरसाठी", "चौंसाठी", "पैसाठी", "छैसठी", "सत्सठ्ठी", "अर्सठ्ठी", "उनन्सत्तरी", "सतरी",
-                "एकहत्तर", "बहत्तर", "त्रिहत्तर", "चौहत्तर", "पचहत्तर", "छहत्तर", "सत्हत्तर", "अठ्हत्तर", "उनास्सी", "अस्सी",
-                "एकासी", "बयासी", "त्रीयासी", "चौरासी", "पचासी", "छयासी", "सतासी", "अठासी", "उनान्नब्बे", "नब्बे",
-                "एकान्नब्बे", "बयान्नब्बे", "त्रियान्नब्बे", "चौरान्नब्बे", "पंचान्नब्बे", "छयान्नब्बे", "सन्तान्‍नब्बे", "अन्ठान्नब्बे", "उनान्सय"
-            };
-        private readonly string[] onesDevnagari = new[]{ ";'Go", "Ps", "b'O{", "tLg", "rf/", "kfFr", "5", ";ft", "cf7", "gf}", "b;",
-            "P3f/", "afx|", "t]x|", "rf}w", "kG„", ";f]x|", ";q", "c7fx|", "pGgfO;", "aL;", "PsfO;",
-            "afO;", "t]O;", "rf}aL;", "krL;", "5AaL;", ";QfO;", "c¶fO;", "pgGtL;", "tL;",
-            "PstL;", "atL;", "t]tL;", "rf}tL;", "k}tL;", "5tL;", ";/tL;", "c/tL;", "pggrfnL;", "rfnL;",
-            "PsrfnL;", "aofln;", "tL/rfnL;", "rf}jfln;", "k}+tfln;", "5ofln;", ";/rfnL;", "c/rfnL;", "pggrf;", "krf;",
-            "PsfpGg", "afpGg", "lqkGg", "rf}jGg", "kRkGg", "5kGg", ";GtfpGg", "cG7fpFGg", @"pgfGg\;f7L", ";f7L",
-            "Ps;f7L", "af;f7L", "tL/;f7L", "rf}+;f7L", "k};f7L", "5};7L", ";T;¶L", "c;{¶L", "pgG;Q/L", ";t/L",
-            "PsxQ/", "axQ/", "lqxQ/", "rf}xQ/", "krxQ/", "5xQ/", ";TxQ/", @"c7\xQ/", "pgf:;L", "c:;L",
-            "Psf;L", "aof;L", "qLof;L", "rf}/f;L", "krf;L", "5of;L", ";tf;L", "c7f;L", "pgfGgAa]", "gAa]",
-            "PsfGgAa]", "aofGgAa]", "lqofGgAa]", "rf}/fGgAa]", "k+rfGgAa]", "5ofGgAa]", ";GtfG‍gAa]", "cG7fGgAa]", "pgfG;o"
-        };
+        private readonly string[] _ones;
+        private readonly string[] _tens;
+        private readonly string[] _scale;
 
 
         public enum OutputFormat
@@ -63,13 +27,14 @@ namespace AmountToWordsHelper
         }
         public enum Culture
         {
-            English,
-            Nepali
+            International,
+            Nepali,
+            Hindi
         }
         private int GetResourceLimitIndex(OutputFormat outputFormat) => outputFormat == OutputFormat.English ? 20 : 100;
 
         public AmountToWords(Culture culture) : this(culture, OutputFormat.English) { }
-        public AmountToWords() : this(Culture.English, OutputFormat.English) { }
+        public AmountToWords() : this(Culture.International, OutputFormat.English) { }
 
         public AmountToWords(Culture culture, OutputFormat outputFormat)
         {
@@ -83,12 +48,17 @@ namespace AmountToWordsHelper
                             _amtUnit = "rupees";
                             _subAmtUnit = "paisa";
                             _postfix = "only";
+
+                            _ones = WordResources.OnesEnglish;
+                            _tens = WordResources.TensEnglish;
+                            _scale = WordResources.ScaleNepEnglish;
+
                             break;
                         case OutputFormat.Unicode:
                             _outputFormat = OutputFormat.Unicode;
-                            ones = onesNep;
-                            tens = tensNep;
-                            scale = scaleNep;
+                            _ones = WordResources.OnesNep;
+                            _tens = WordResources.TensNep;
+                            _scale = WordResources.ScaleNep;
 
                             _amtUnit = "रूपैयाँ";
                             _subAmtUnit = "पैसा";
@@ -96,9 +66,9 @@ namespace AmountToWordsHelper
                             break;
                         case OutputFormat.Devnagari:
                             _outputFormat = OutputFormat.Devnagari;
-                            ones = onesDevnagari;
-                            tens = tensDevnagari;
-                            scale = scaleDevnagari;
+                            _ones = WordResources.OnesDevnagari;
+                            _tens = WordResources.TensDevnagari;
+                            _scale = WordResources.ScaleDevnagari;
 
                             _amtUnit = "¿k}ofF";
                             _subAmtUnit = "k};f";
@@ -106,12 +76,40 @@ namespace AmountToWordsHelper
                             break;
                     }
                     break;
-                case Culture.English:
+                case Culture.International:
                     _outputFormat = OutputFormat.English;
-                    scale = scaleEng;
+                    _scale = WordResources.ScaleEng;
                     _amtUnit = "rupees";
                     _subAmtUnit = "paisa";
                     _postfix = "only";
+
+                    _ones = WordResources.OnesEnglish;
+                    _tens = WordResources.TensEnglish;
+                    break;
+                case Culture.Hindi:
+                    switch (outputFormat)
+                    {
+                        case OutputFormat.English:
+                            _amtUnit = "rupees";
+                            _subAmtUnit = "paisa";
+                            _postfix = "only";
+
+                            _ones = WordResources.OnesEnglish;
+                            _tens = WordResources.TensEnglish;
+                            _scale = WordResources.ScaleNepEnglish;
+
+                            break;
+                        case OutputFormat.Unicode:
+                            _outputFormat = OutputFormat.Unicode;
+                            _ones = WordResources.OnesHindi;
+                            _tens = WordResources.TensHindi;
+                            _scale = WordResources.ScaleHindi;
+
+                            _amtUnit = "रुपये";
+                            _subAmtUnit = "पैसा";
+                            _postfix = "मात्र";
+                            break;
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(culture), culture, "Invalid Culture in AmountToWords");
@@ -141,10 +139,10 @@ namespace AmountToWordsHelper
                 int scaleMapIndex = 0;
                 string wholeNumber = number;
                 if (number != "0")
-                    if (_culture == Culture.English)
+                    if (_culture == Culture.International)
                         scaleMapIndex = (int)Math.Ceiling((decimal)number.Length / 3);
                     else
-                        scaleMapIndex = (number.Length - 3) < 1 ? 1 : (int)Math.Floor((decimal)(number.Length) / 2);
+                        scaleMapIndex = (number.Length - 3) < 1 ? 1 : number.Length / 2;
 
                 for (int i = scaleMapIndex; i >= 0; i--)
                 {
@@ -162,7 +160,7 @@ namespace AmountToWordsHelper
                             wordBuilder.Append(_amtUnit);
                             break;
                         default: //For Everything Greater than hundreds
-                            if (_culture == Culture.English)
+                            if (_culture == Culture.International)
                             {
                                 int lastIndex = (wholeNumber.Length % ((i - 1) * 3 + 1)) + 1;
                                 string hundreds = wholeNumber.Substring(0, lastIndex);
@@ -178,7 +176,7 @@ namespace AmountToWordsHelper
                             }
 
                             if (!string.IsNullOrEmpty(inWords.Trim()))
-                                wordBuilder.Append(string.Concat(inWords.Trim(), " ", scale[i], " "));
+                                wordBuilder.Append(string.Concat(inWords.Trim(), " ", _scale[i], " "));
                             break;
                     }
                 }
@@ -189,11 +187,11 @@ namespace AmountToWordsHelper
             return CapitalizeFirstLetter(inWords.Trim());
 
             //Local Functions
-            string CapitalizeFirstLetter(string input)
+            string CapitalizeFirstLetter(string words)
             {
-                if (input == null) throw new ArgumentNullException("amount", "Amount in words must not be null");
-                if (string.IsNullOrEmpty(input)) throw new ArgumentException("Amount in words cannot be empty");
-                return input.First().ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture) + input.Substring(1);
+                if (words == null) throw new ArgumentNullException(nameof(words), "Amount in words must not be null");
+                if (string.IsNullOrEmpty(words)) throw new ArgumentException("Amount in words cannot be empty");
+                return words.First().ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture) + words.Substring(1);
             }
         }
 
@@ -205,19 +203,19 @@ namespace AmountToWordsHelper
 
             if (dec < GetResourceLimitIndex(outputFormat))
             {
-                words = ones[dec];
+                words = _ones[dec];
             }
             else
             {
                 if (dec % 10 == 0)
                 {
-                    words = tens[dec / 10];
+                    words = _tens[dec / 10];
                 }
                 else
                 {
                     int first = Convert.ToInt16(tenth.Substring(0, 1), CultureInfo.InvariantCulture);
                     int second = Convert.ToInt16(tenth.Substring(1, 1), CultureInfo.InvariantCulture);
-                    words = string.Concat(tens[first], " ", ones[second]);
+                    words = string.Concat(_tens[first], " ", _ones[second]);
                 }
             }
 
@@ -230,7 +228,7 @@ namespace AmountToWordsHelper
             if (hundred.Length == 3)
             {
                 int hundredth = Convert.ToInt16(hundred.Substring(0, 1), CultureInfo.InvariantCulture);
-                inWords = hundredth > 0 ? string.Concat(ones[hundredth], " ", scale[1], " ") : string.Empty;
+                inWords = hundredth > 0 ? string.Concat(_ones[hundredth], " ", _scale[1], " ") : string.Empty;
                 hundred = hundred.Substring(1, 2);
             }
 
