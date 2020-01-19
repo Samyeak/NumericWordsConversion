@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AmountToWords\AmountToWordsHelper.csproj" />
+    <ProjectReference Include="..\AmountToWords\NumericWordsConversion.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
-﻿namespace AmountToWordsHelper
-{
-    using System;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 
+namespace NumericWordsConversion
+{
     public class AmountToWords
     {
         private readonly string _amtUnit;
@@ -18,19 +18,6 @@
         private readonly string[] _tens;
         private readonly string[] _scale;
 
-
-        public enum OutputFormat
-        {
-            English,
-            Devnagari,
-            Unicode
-        }
-        public enum Culture
-        {
-            International,
-            Nepali,
-            Hindi
-        }
         private int GetResourceLimitIndex(OutputFormat outputFormat) => outputFormat == OutputFormat.English ? 20 : 100;
 
         public AmountToWords(Culture culture) : this(culture, OutputFormat.English) { }

@@ -1,5 +1,4 @@
-﻿
-using AmountToWordsHelper;
+﻿using NumericWordsConversion;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -11,7 +10,7 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            amtToWords = new AmountToWords(AmountToWords.Culture.Nepali, AmountToWords.OutputFormat.Unicode);
+            amtToWords = new AmountToWords(Culture.Nepali, OutputFormat.Unicode);
         }
 
         [Test]

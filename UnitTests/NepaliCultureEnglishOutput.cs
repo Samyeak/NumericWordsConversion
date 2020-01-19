@@ -1,5 +1,5 @@
 ﻿using System.Net.NetworkInformation;
-using AmountToWordsHelper;
+using NumericWordsConversion;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -10,7 +10,7 @@ namespace UnitTests
         [Test, TestCaseSource("WordCases")]
         public void DecimalOnly(decimal amount, string words)
         {
-            AmountToWords amt = new AmountToWords(AmountToWords.Culture.Nepali, AmountToWords.OutputFormat.English);
+            AmountToWords amt = new AmountToWords(Culture.Nepali, OutputFormat.English);
             string result = amt.ConvertToWords(amount);
             Assert.AreEqual(words, result);
         }

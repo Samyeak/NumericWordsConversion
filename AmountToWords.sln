@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmountToWordsHelper", "AmountToWords\AmountToWordsHelper.csproj", "{85861DC0-DE30-4D37-9C07-FAFE66409A47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NumericWordsConversion", "AmountToWords\NumericWordsConversion.csproj", "{85861DC0-DE30-4D37-9C07-FAFE66409A47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{06BB2AD6-C600-4221-8E21-2EBDDFECF31B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{06BB2AD6-C600-4221-8E21-2EBDDFECF31B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{1CD938FE-2CE9-483F-A4BB-9E099BA7D76F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{1CD938FE-2CE9-483F-A4BB-9E099BA7D76F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

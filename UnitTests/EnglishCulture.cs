@@ -1,4 +1,4 @@
-﻿using AmountToWordsHelper;
+﻿using NumericWordsConversion;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -9,7 +9,7 @@ namespace UnitTests
         [Test, TestCaseSource("EnglishWordCases")]
         public void DecimalOnly(decimal amount, string words)
         {
-            AmountToWords amt = new AmountToWords(AmountToWords.Culture.International, AmountToWords.OutputFormat.English);
+            AmountToWords amt = new AmountToWords(Culture.International, OutputFormat.English);
             string result = amt.ConvertToWords(amount);
             Assert.AreEqual(words, result);
         }
@@ -17,7 +17,7 @@ namespace UnitTests
         [Test, TestCaseSource("TestCases")]
         public string MyTestCases(decimal amount)
         {
-            AmountToWords amt = new AmountToWords(AmountToWords.Culture.International, AmountToWords.OutputFormat.English);
+            AmountToWords amt = new AmountToWords(Culture.International, OutputFormat.English);
             string result = amt.ConvertToWords(amount);
             return result;
         }

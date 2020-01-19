@@ -1,4 +1,4 @@
-﻿namespace AmountToWordsHelper
+﻿namespace NumericWordsConversion
 {
     internal static class WordResources
     {

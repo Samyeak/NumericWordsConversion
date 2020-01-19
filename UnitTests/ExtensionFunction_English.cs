@@ -1,6 +1,6 @@
-﻿using AmountToWordsHelper;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
+using NumericWordsConversion;
 
 namespace UnitTests
 {

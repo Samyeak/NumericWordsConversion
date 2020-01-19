@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static AmountToWordsHelper.AmountToWords;
+﻿using static NumericWordsConversion.AmountToWords;
 
-namespace AmountToWordsHelper
+namespace NumericWordsConversion
 {
     public static class ExtensionHelper
     {

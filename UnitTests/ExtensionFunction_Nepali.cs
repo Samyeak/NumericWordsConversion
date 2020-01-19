@@ -1,4 +1,4 @@
-﻿using AmountToWordsHelper;
+﻿using NumericWordsConversion;
 using NUnit.Framework;
 
 namespace UnitTests
