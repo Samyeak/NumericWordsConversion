@@ -16,12 +16,14 @@ namespace UnitTests
 
         private static readonly TestCaseData[] TestCases =
         {
-            new TestCaseData(0M).Returns(""),
-            new TestCaseData(100M).Returns("one hundred"),
-            new TestCaseData(99_000M).Returns("ninety nine thousand"),
-            new TestCaseData(99_000.1M).Returns("ninety nine thousand point one"),
-            new TestCaseData(0.01M).Returns("ninety nine thousand point one"),
-            new TestCaseData(0.001M).Returns("ninety nine thousand point one"),
+            new TestCaseData(0M).Returns("Zero"),
+            new TestCaseData(0.001M).Returns("Zero point zero zero one"),
+            new TestCaseData(0.01M).Returns("Zero point zero one"),
+            new TestCaseData(100M).Returns("One hundred"),
+            new TestCaseData(10555.01M).Returns("Ten thousand five hundred fifty five point zero one"),
+            new TestCaseData(99_000M).Returns("Ninety nine thousand"),
+            new TestCaseData(99_000.1M).Returns("Ninety nine thousand point one"),
+            new TestCaseData( 10_000_000_000_000_000_000_000_000_000M).Returns("Ten octillion"),
         };
     }
 }

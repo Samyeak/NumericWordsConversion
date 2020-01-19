@@ -1,4 +1,6 @@
-﻿namespace NumericWordsConversion
+﻿using System.Collections.Generic;
+
+namespace NumericWordsConversion
 {
     internal static class WordResources
     {
@@ -13,7 +15,7 @@
         public static readonly string[] ScaleHindi = { "", "सौ", "हजार", "लाख", "करोड़", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
 
         //ENGLISH WORDS RESOURCE
-        public static readonly string[] OnesEnglish = { "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+        public static readonly string[] OnesEnglish = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
         public static readonly string[] TensEnglish = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
 
         //NEPALI WORDS RESOURCE
@@ -56,6 +58,16 @@
             "इकहत्तर", "बहत्तर", "तिहत्तर", "चौहत्तर", "पचहत्तर", "छिहत्तर", "सतहत्तर", "अठहत्तर", "उनासी", "अस्सी",
             "इक्यासी", "बयासी", "तिरासी", "चौरासी", "पचासी", "छियासी", "सत्तासी", "अट्ठासी", "नवासी", "नब्बे",
             "इक्यानबे", "बानबे", "तिरानबे", "चौरानबे", "पंचानबे", "छियानबे", "सत्तानबे", "अट्ठानबे", "निन्यानबे"
+        };
+
+
+        public static IDictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)> CurrencyDefaults
+        = new Dictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)>()
+        {
+            {(Culture.International, OutputFormat.English), ("Dollar", "Cents", "Only")},
+            {(Culture.Nepali, OutputFormat.English), ("Rupees", "Paisa", "Only")},
+            {(Culture.Nepali, OutputFormat.Unicode), ("रूपैयाँ", "पैसा", "मात्र")},
+            {(Culture.Nepali, OutputFormat.Devnagari), ("¿k}ofF", "k};f", "dfq")},
         };
     }
 }
