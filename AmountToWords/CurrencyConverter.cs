@@ -1,4 +1,6 @@
-﻿namespace NumericWordsConversion
+﻿using System.Text;
+
+namespace NumericWordsConversion
 {
     using System;
     using System.Globalization;
@@ -86,26 +88,41 @@
 
         public string ToWords(decimal number)
         {
+            if (number <= 0) return string.Empty;
+            decimal fractionalDigits = number % 1;
             string integralDigitsString = number
                 .ToString(CultureInfo.InvariantCulture)
                 .Split('.')
                 .ElementAt(0);
+            string fractionalDigitsString = fractionalDigits.ToString(_options.DecimalPlaces > -1 ? $"F{_options.DecimalPlaces}" : "G",
+                                                    CultureInfo.InvariantCulture)
+                                                .Split('.')
+                                                .ElementAtOrDefault(1) ?? string.Empty;
+            if (decimal.Parse(integralDigitsString) <= 0 && decimal.Parse(fractionalDigitsString) <= 0) return string.Empty;
 
-            decimal fractionalDigits = number % 1;
+            string integralWords = string.Empty;
+            if (decimal.Parse(integralDigitsString) > 0)
+            {
+                integralWords = _conversionFactory.ConvertDigits(integralDigitsString);
+                integralWords = _options.CurrencyNotationType == NotationType.Prefix
+                    ? _options.CurrencyUnit + " " + integralWords
+                    : integralWords + " " + _options.CurrencyUnit;
+            }
 
-            string integralWords = _conversionFactory.ConvertDigits(integralDigitsString);
-            string fractionalDigitsString = fractionalDigits.ToString(_options.DecimalPlaces > -1 ? $"G{_options.DecimalPlaces}" : "G",
-                CultureInfo.InvariantCulture)
-                .Split('.')
-                .ElementAtOrDefault(1);
-            if (fractionalDigits <= 0 || IsNullOrEmpty(fractionalDigitsString)) return integralWords.CapitalizeFirstLetter();
+            if (int.Parse(fractionalDigitsString) <= 0 || IsNullOrEmpty(fractionalDigitsString)) return string.Concat(integralWords, (IsNullOrEmpty(_options.EndOfWordsMarker) ? "" : " " + _options.EndOfWordsMarker)).CapitalizeFirstLetter();
 
-            string fractionalWords = Empty;
-            fractionalDigitsString
-                .ToList()
-                .ForEach(x => fractionalWords += _conversionFactory.ToOnesWords(Convert.ToUInt16(x.ToString(CultureInfo.InvariantCulture))) + " ");
+            string fractionalWords = _conversionFactory.ConvertDigits(fractionalDigitsString);
+            fractionalWords = _options.SubCurrencyNotationType == NotationType.Prefix
+                ? _options.SubCurrencyUnit + " " + fractionalWords
+                : fractionalWords + " " + _options.SubCurrencyUnit;
 
-            return $"{integralWords} {_options.DecimalSeparator} {fractionalWords.TrimEnd()}".CapitalizeFirstLetter();
+            fractionalWords = (
+                $"{integralWords} " +
+                $"{(IsNullOrEmpty(_options.CurrencyUnitSeparator) ? "" : _options.CurrencyUnitSeparator + " ")}" +
+                $"{fractionalWords.TrimEnd()}{(IsNullOrEmpty(_options.EndOfWordsMarker) ? "" : " " + _options.EndOfWordsMarker)}")
+                    .Trim().CapitalizeFirstLetter();
+
+            return fractionalWords;
 
         }
 

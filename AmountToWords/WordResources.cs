@@ -64,10 +64,11 @@ namespace NumericWordsConversion
         public static IDictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)> CurrencyDefaults
         = new Dictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)>()
         {
-            {(Culture.International, OutputFormat.English), ("Dollar", "Cents", "Only")},
-            {(Culture.Nepali, OutputFormat.English), ("Rupees", "Paisa", "Only")},
+            {(Culture.International, OutputFormat.English), ("dollar", "cents", "only")},
+            {(Culture.Nepali, OutputFormat.English), ("rupees", "paisa", "only")},
             {(Culture.Nepali, OutputFormat.Unicode), ("रूपैयाँ", "पैसा", "मात्र")},
             {(Culture.Nepali, OutputFormat.Devnagari), ("¿k}ofF", "k};f", "dfq")},
+            //TODO: ADD FOR HINDI
         };
     }
 }

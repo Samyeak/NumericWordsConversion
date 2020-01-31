@@ -10,8 +10,15 @@ namespace UnitTests
         [Test, TestCaseSource("WordCases")]
         public void DecimalOnly(decimal amount, string words)
         {
-            AmountToWords amt = new AmountToWords(Culture.Nepali, OutputFormat.English);
-            string result = amt.ConvertToWords(amount);
+            //Old Method
+            //AmountToWords amt = new AmountToWords(Culture.Nepali, OutputFormat.English);
+            //New Method
+            CurrencyConverter amt = new CurrencyConverter(new CurrencyWordsConversionOptions()
+            {
+                Culture =  Culture.Nepali,
+                OutputFormat = OutputFormat.English
+            });
+            string result = amt.ToWords(amount);
             Assert.AreEqual(words, result);
         }
 
