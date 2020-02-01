@@ -10,13 +10,13 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     
     steps:
-      - name: build
       - uses: actions/checkout@v1
+      - name: Setup .NET Core
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.0.100
       - name: Build with dotnet
-      - run: dotnet build --configuration Release
+        run: dotnet build --configuration Release
   
   test:
     needs: [build]
