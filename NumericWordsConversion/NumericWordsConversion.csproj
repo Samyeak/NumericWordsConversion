@@ -9,10 +9,10 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Version>1.0.0.0</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/Samyeak/AmountToWords.git</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Samyeak/AmountToWords.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Samyeak/NumericWordsConversion.git</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Samyeak/NumericWordsConversion.git</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
-    <PackageTags>ToWords; AmountToWords; Nepali; Devnagari; Unicode; DecimalToWords; Nepali Number To Words; Amount To Words;</PackageTags>
+    <PackageTags>Numeric; NumericToWords; CurrencyToWords; InWords; Currency In Words; Number In Words; ToWords; AmountToWords; Nepali; Devnagari; Unicode; DecimalToWords; Nepali Number To Words; Amount To Words;</PackageTags>
     <PackageReleaseNotes>**Amount To Words Library for English and Nepali Number System**
 * Supports output in English, Nepali Unicode as well as Devnagari System
 * Supports input upto the max number suppored by the decimal type</PackageReleaseNotes>
