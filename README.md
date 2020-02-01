@@ -94,7 +94,7 @@ amount.ToCurrencyWords(); //Outputs: Rupees one lakh and one paisa.
 ```
 
 ## License
-[Under GNU GENERAL PUBLIC LICENSE V3](www.gnu.org/licenses/gpl-3.0.en.html)
+[Under GNU GENERAL PUBLIC LICENSE V3](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 <!--
 ## Install
