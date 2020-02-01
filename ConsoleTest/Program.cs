@@ -1,6 +1,5 @@
-﻿using AmountToWordsHelper;
+﻿using NumericWordsConversion;
 using System;
-using System.Threading;
 
 namespace ConsoleTest
 {
@@ -8,17 +7,14 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            AmtTests();
+            
+            CurrencyWordsConverter converter = new CurrencyWordsConverter();
+            decimal number = 123_000M;
+            string words = converter.ToWords(number);
+            //words = number.To
+            Console.WriteLine(words);
             Console.ReadKey();
         }
 
-        private static void AmtTests()
-        {
-            decimal amount = 88_77_66_55_44_33_22_11_321M;
-            string max = amount.ToUnicodeWords();
-
-            AmountToWords amt = new AmountToWords(AmountToWords.Culture.English);
-            //var result = amt.ConvertToEnglishWords(111_222_333_444M);
-        }
     }
 }
