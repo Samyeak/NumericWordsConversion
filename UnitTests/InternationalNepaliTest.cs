@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace UnitTests
 {
-    public class AmountToWordsEng
+    public class InternationalNepaliTest
     {
         public CurrencyWordsConverter AmtToWords { get; set; }
 

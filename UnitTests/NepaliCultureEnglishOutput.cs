@@ -10,9 +10,6 @@ namespace UnitTests
         [Test, TestCaseSource("WordCases")]
         public void DecimalOnly(decimal amount, string words)
         {
-            //Old Method
-            //AmountToWords amt = new AmountToWords(Culture.Nepali, OutputFormat.English);
-            //New Method
             CurrencyWordsConverter amt = new CurrencyWordsConverter(new CurrencyWordsConversionOptions()
             {
                 Culture =  Culture.Nepali,

@@ -18,16 +18,12 @@
 * Supports input upto the max number suppored by the decimal type</PackageReleaseNotes>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>AmountToWordsSignatureKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>NumericWordsConversionSignatureKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>true</Optimize>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="AmountToWords.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\LICENSE">
