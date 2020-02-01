@@ -1,6 +1,6 @@
 name: BuildAndUnitTests
 
-on: [push, pull_request, release]
+on: [push]
 
 jobs:
   test:
