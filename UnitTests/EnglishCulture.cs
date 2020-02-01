@@ -1,4 +1,4 @@
-﻿using AmountToWordsHelper;
+﻿using NumericWordsConversion;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -6,19 +6,32 @@ namespace UnitTests
     [TestFixture]
     public class EnglishCulture
     {
-        [Test, TestCaseSource("EnglishWordCases")]
+        [SetUp]
+        public void Setup()
+        {
+            NumericWordsConfiguration.ConfigureConversionDefaults(options =>
+            {
+                options.SetDefaultCurrencyWordsOptions(new CurrencyWordsConversionOptions
+                {
+                    Culture = Culture.International,
+                    OutputFormat = OutputFormat.English,
+                    CurrencyUnit = "rupees",
+                    SubCurrencyUnit = "paisa"
+                });
+            });
+        }
+
+        [Test, TestCaseSource(nameof(EnglishWordCases))]
         public void DecimalOnly(decimal amount, string words)
         {
-            AmountToWords amt = new AmountToWords(AmountToWords.Culture.International, AmountToWords.OutputFormat.English);
-            string result = amt.ConvertToWords(amount);
+            string result = amount.ToCurrencyWords();
             Assert.AreEqual(words, result);
         }
 
-        [Test, TestCaseSource("TestCases")]
+        [Test, TestCaseSource(nameof(TestCases))]
         public string MyTestCases(decimal amount)
         {
-            AmountToWords amt = new AmountToWords(AmountToWords.Culture.International, AmountToWords.OutputFormat.English);
-            string result = amt.ConvertToWords(amount);
+            string result = amount.ToCurrencyWords();
             return result;
         }
 
