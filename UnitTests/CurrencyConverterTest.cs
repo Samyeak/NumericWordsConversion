@@ -14,7 +14,7 @@ namespace UnitTests
                 Culture = Culture.International,
             };
 
-            CurrencyConverter amt = new CurrencyConverter(options);
+            CurrencyWordsConverter amt = new CurrencyWordsConverter(options);
             string result = amt.ToWords(amount);
             return result;
         }
@@ -29,7 +29,7 @@ namespace UnitTests
                 EndOfWordsMarker = "मात्र"
             };
 
-            CurrencyConverter amt = new CurrencyConverter(options);
+            CurrencyWordsConverter amt = new CurrencyWordsConverter(options);
             string result = amt.ToWords(amount);
             return result;
         }

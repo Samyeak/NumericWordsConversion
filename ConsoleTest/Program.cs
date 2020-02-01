@@ -7,9 +7,11 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            CurrencyConverter converter = new CurrencyConverter();
+            
+            CurrencyWordsConverter converter = new CurrencyWordsConverter();
             decimal number = 123_000M;
             string words = converter.ToWords(number);
+            //words = number.To
             Console.WriteLine(words);
             Console.ReadKey();
         }

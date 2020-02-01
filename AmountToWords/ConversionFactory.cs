@@ -5,14 +5,22 @@ using static System.String;
 
 namespace NumericWordsConversion
 {
+    /// <summary>
+    /// Used to simply map numbers with their respective words output as per the specified options
+    /// </summary>
     internal class ConversionFactory
     {
-        private readonly WordsConversionOptions _options;
+        private readonly NumericWordsConversionOptions _options;
         private readonly string[] _ones;
         private readonly string[] _tens;
         private readonly string[] _scale;
 
-        public ConversionFactory(WordsConversionOptions options, string[] ones, string[] tens, string[] scale)
+        public ConversionFactory(NumericWordsConversionOptions options)
+        {
+            _options = options;
+            Utilities.ManageSuitableResources(out _ones, out _tens, out _scale, options);
+        }
+        public ConversionFactory(NumericWordsConversionOptions options, string[] ones, string[] tens, string[] scale)
         {
             _options = options;
             _ones = ones;
@@ -62,6 +70,11 @@ namespace NumericWordsConversion
             return inWords.Trim();
         }
 
+        /// <summary>
+        /// Responsible for converting any input digits to words
+        /// </summary>
+        /// <param name="digits"></param>
+        /// <returns></returns>
         internal string ConvertDigits(string digits)
         {
             if (digits == "0") return _ones[0];

@@ -4,20 +4,26 @@ using NUnit.Framework;
 namespace UnitTests
 {
     [TestFixture]
-    public class ConvertToWordsEnglish
+    public class ToWordsEnglish
     {
-        public AmountToWords amtToWords { get; set; }
+        public CurrencyWordsConverter AmtToWords { get; set; }
 
         [SetUp]
         public void Setup()
         {
-            amtToWords = new AmountToWords();
+            AmtToWords = new CurrencyWordsConverter(new CurrencyWordsConversionOptions
+            {
+                Culture = Culture.International,
+                OutputFormat = OutputFormat.English,
+                CurrencyUnit = "rupees",
+                SubCurrencyUnit = "paisa"
+            });
         }
 
         [Test]
         public void ZeroPaisa()
         {
-            string actualResult = amtToWords.ConvertToWords(32152M);
+            string actualResult = AmtToWords.ToWords(32152M);
             string expectedResult = "Thirty two thousand one hundred fifty two rupees only";
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -25,7 +31,7 @@ namespace UnitTests
         [Test]
         public void OnePaisa()
         {
-            string actualResult = amtToWords.ConvertToWords(32152.01M);
+            string actualResult = AmtToWords.ToWords(32152.01M);
             string expectedResult = "Thirty two thousand one hundred fifty two rupees one paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -33,7 +39,7 @@ namespace UnitTests
         [Test]
         public void TenPaisa()
         {
-            string actualResult = amtToWords.ConvertToWords(32152.10M);
+            string actualResult = AmtToWords.ToWords(32152.10M);
             string expectedResult = "Thirty two thousand one hundred fifty two rupees ten paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -41,7 +47,7 @@ namespace UnitTests
         [Test]
         public void ElevenPaisa()
         {
-            string actualResult = amtToWords.ConvertToWords(32152.11M);
+            string actualResult = AmtToWords.ToWords(32152.11M);
             string expectedResult = "Thirty two thousand one hundred fifty two rupees eleven paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -49,7 +55,7 @@ namespace UnitTests
         [Test]
         public void ThirtyPaisa()
         {
-            string actualResult = amtToWords.ConvertToWords(32152.30M);
+            string actualResult = AmtToWords.ToWords(32152.30M);
             string expectedResult = "Thirty two thousand one hundred fifty two rupees thirty paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -57,7 +63,7 @@ namespace UnitTests
         [Test]
         public void EightyEightPaisa()
         {
-            string actualResult = amtToWords.ConvertToWords(32152.88M);
+            string actualResult = AmtToWords.ToWords(32152.88M);
             string expectedResult = "Thirty two thousand one hundred fifty two rupees eighty eight paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }

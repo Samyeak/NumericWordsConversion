@@ -6,13 +6,44 @@ namespace UnitTests
     [TestFixture]
     public class NumberConverterTest
     {
+        [SetUp]
+        public void Setup()
+        {
+            NumericWordsConfiguration.ConfigureConversionDefaults(options =>
+            {
+                options.SetDefaultNumericWordsOptions(new NumericWordsConversionOptions
+                {
+                    DecimalPlaces = 2
+                });
+            });
+        }
+
         [Test, TestCaseSource(nameof(TestCases))]
         public string MyTestCases(decimal amount)
         {
-            NumberConverter amt = new NumberConverter(new WordsConversionOptions(){DecimalPlaces = 4});
+            NumericWordsConverter amt = new NumericWordsConverter(new NumericWordsConversionOptions(){DecimalPlaces = 4});
             string result = amt.ToWords(amount);
             return result;
         }
+
+        [Test, TestCaseSource(nameof(StaticExtensionEnglishCases))]
+        public string StaticExtensionEnglish(decimal amount)
+        {
+
+            string result = amount.ToNumericWords();
+            return result;
+        }
+        private static readonly TestCaseData[] StaticExtensionEnglishCases =
+        {
+            new TestCaseData(0M).Returns("Zero"),
+            new TestCaseData(0.001M).Returns("Zero"),
+            new TestCaseData(0.01M).Returns("Zero point zero one"),
+            new TestCaseData(100M).Returns("One hundred"),
+            new TestCaseData(10555.01M).Returns("Ten thousand five hundred fifty five point zero one"),
+            new TestCaseData(99_000M).Returns("Ninety nine thousand"),
+            new TestCaseData(99_000.1M).Returns("Ninety nine thousand point one"),
+            new TestCaseData( 10_000_000_000_000_000_000_000_000_000M).Returns("Ten octillion"),
+        };
 
         private static readonly TestCaseData[] TestCases =
         {

@@ -26,6 +26,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AmountToWords.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

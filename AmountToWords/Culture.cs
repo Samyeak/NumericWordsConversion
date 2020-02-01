@@ -1,5 +1,8 @@
 ﻿namespace NumericWordsConversion
 {
+    /// <summary>
+    /// Culture used for Numeral System
+    /// </summary>
     public enum Culture
     {
     /// <summary>

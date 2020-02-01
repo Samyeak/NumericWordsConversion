@@ -13,7 +13,7 @@ namespace UnitTests
             //Old Method
             //AmountToWords amt = new AmountToWords(Culture.Nepali, OutputFormat.English);
             //New Method
-            CurrencyConverter amt = new CurrencyConverter(new CurrencyWordsConversionOptions()
+            CurrencyWordsConverter amt = new CurrencyWordsConverter(new CurrencyWordsConversionOptions()
             {
                 Culture =  Culture.Nepali,
                 OutputFormat = OutputFormat.English
