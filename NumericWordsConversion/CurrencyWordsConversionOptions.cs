@@ -14,7 +14,10 @@
         {
             get
             {
-                if (_currencyUnit != null) return _currencyUnit;
+                if (_currencyUnit != null) {
+                    return this._currencyUnit;
+                }
+
                 WordResources.CurrencyDefaults.TryGetValue((Culture, OutputFormat), out var units);
                 _currencyUnit = units.CurrencyUnit;
                 return _currencyUnit;
@@ -32,7 +35,10 @@
         {
             get
             {
-                if (_subCurrencyUnit != null) return _subCurrencyUnit;
+                if (_subCurrencyUnit != null) {
+                    return this._subCurrencyUnit;
+                }
+
                 WordResources.CurrencyDefaults.TryGetValue((Culture, OutputFormat), out var units);
                 _subCurrencyUnit = units.SubCurrencyUnit;
                 return _subCurrencyUnit;
@@ -48,7 +54,10 @@
         {
             get
             {
-                if (_endOfWordsMarker != null) return _endOfWordsMarker;
+                if (_endOfWordsMarker != null) {
+                    return this._endOfWordsMarker;
+                }
+
                 WordResources.CurrencyDefaults.TryGetValue((Culture, OutputFormat), out var units);
                 _endOfWordsMarker = units.EndOfWordsMarker;
                 return _endOfWordsMarker;

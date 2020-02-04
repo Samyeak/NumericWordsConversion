@@ -57,7 +57,9 @@ namespace NumericWordsConversion
                 )
                     .Split('.')
                     .ElementAtOrDefault(1);
-            if (fractionalDigits <= 0 || IsNullOrEmpty(fractionalDigitsString)) return integralWords.CapitalizeFirstLetter();
+            if (fractionalDigits <= 0 || IsNullOrEmpty(fractionalDigitsString)) {
+                return integralWords.CapitalizeFirstLetter();
+            }
 
             string fractionalWords = Empty;
             fractionalDigitsString

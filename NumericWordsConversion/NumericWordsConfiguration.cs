@@ -13,7 +13,9 @@ namespace NumericWordsConversion
         /// <param name="options">Define options for numeric or currency words</param>
         public static void ConfigureConversionDefaults(Action<OptionsInitializer> options)
         {
-            if (options == null) throw new NullReferenceException("Numeric Words Options Initializer Option cannot be null");
+            if (options == null) {
+                throw new NullReferenceException("Numeric Words Options Initializer Option cannot be null");
+            }
 
             OptionsInitializer initializer = new OptionsInitializer();
             options.Invoke(initializer);

@@ -33,7 +33,10 @@ namespace NumericWordsConversion
         internal string ToTensWord(string tenth)
         {
             int dec = Convert.ToUInt16(tenth, CultureInfo.InvariantCulture);
-            if (dec <= 0) return Empty;
+            if (dec <= 0) {
+                return Empty;
+            }
+
             string words;
 
             if (dec < _options.ResourceLimitIndex)
@@ -77,13 +80,19 @@ namespace NumericWordsConversion
         /// <returns></returns>
         internal string ConvertDigits(string digits)
         {
-            if (digits == "0") return _ones[0];
+            if (digits == "0") {
+                return this._ones[0];
+            }
+
             StringBuilder builder = new StringBuilder();
             int scaleMapIndex;
-            if (_options.Culture == Culture.International)
+            if (_options.Culture == Culture.International) {
                 scaleMapIndex = (int)Math.Ceiling((decimal)digits.Length / 3);
-            else
+            }
+            else {
                 scaleMapIndex = (digits.Length - 3) < 1 ? 1 : digits.Length / 2;
+            }
+
             for (int i = scaleMapIndex; i > 0; i--)
             {
                 string inWords;
@@ -91,8 +100,10 @@ namespace NumericWordsConversion
                 {
                     case 1: //For the Hundreds, tens and ones
                         inWords = ToHundredthWords(digits);
-                        if (!IsNullOrEmpty(inWords))
+                        if (!IsNullOrEmpty(inWords)) {
                             builder.Append(Concat(inWords.Trim(), " "));
+                        }
+
                         break;
                     default: //For Everything Greater than hundreds
                         if (_options.Culture == Culture.International)
@@ -110,8 +121,10 @@ namespace NumericWordsConversion
                             inWords = ToTensWord(hundreds);
                         }
 
-                        if (!IsNullOrEmpty(inWords.Trim()))
-                            builder.Append(Concat(inWords.Trim(), " ", _scale[i], " "));
+                        if (!IsNullOrEmpty(inWords.Trim())) {
+                            builder.Append(Concat(inWords.Trim(), " ", this._scale[i], " "));
+                        }
+
                         break;
                 }
             }

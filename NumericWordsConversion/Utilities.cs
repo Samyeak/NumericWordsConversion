@@ -13,7 +13,10 @@ namespace NumericWordsConversion
         /// <returns></returns>
         internal static string CapitalizeFirstLetter(this string words)
         {
-            if (string.IsNullOrEmpty(words)) throw new ArgumentException("Input string must not be null or empty");
+            if (string.IsNullOrEmpty(words)) {
+                throw new ArgumentException("Input string must not be null or empty");
+            }
+
             return words.First().ToString(CultureInfo.InvariantCulture).ToUpper(CultureInfo.InvariantCulture) + words.Substring(1);
         }
 
