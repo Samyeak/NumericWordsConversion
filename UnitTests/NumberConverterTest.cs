@@ -1,34 +1,29 @@
 ﻿using NumericWordsConversion;
 using NUnit.Framework;
 
-namespace UnitTests
-{
+namespace UnitTests {
     [TestFixture]
-    public class NumberConverterTest
-    {
+    public class NumberConverterTest {
         [SetUp]
-        public void Setup()
-        {
-            NumericWordsConfiguration.ConfigureConversionDefaults(options =>
-            {
-                options.SetDefaultNumericWordsOptions(new NumericWordsConversionOptions
-                {
+        public void Setup() {
+            NumericWordsConfiguration.ConfigureConversionDefaults( options => {
+                options.SetDefaultNumericWordsOptions( new NumericWordsConversionOptions {
                     DecimalPlaces = 2
-                });
-            });
+                } );
+            } );
         }
 
-        [Test, TestCaseSource(nameof(TestCases))]
-        public string MyTestCases(decimal amount)
-        {
-            NumericWordsConverter amt = new NumericWordsConverter(new NumericWordsConversionOptions(){DecimalPlaces = 4});
-            string result = amt.ToWords(amount);
+        [Test]
+        [TestCaseSource( nameof( TestCases ) )]
+        public string MyTestCases( decimal amount ) {
+            NumericWordsConverter amt = new NumericWordsConverter( new NumericWordsConversionOptions() { DecimalPlaces = 4 } );
+            string result = amt.ToWords( amount );
             return result;
         }
 
-        [Test, TestCaseSource(nameof(StaticExtensionEnglishCases))]
-        public string StaticExtensionEnglish(decimal amount)
-        {
+        [Test]
+        [TestCaseSource( nameof( StaticExtensionEnglishCases ) )]
+        public string StaticExtensionEnglish( decimal amount ) {
 
             string result = amount.ToNumericWords();
             return result;

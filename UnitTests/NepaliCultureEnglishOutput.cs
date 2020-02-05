@@ -2,21 +2,18 @@
 using NumericWordsConversion;
 using NUnit.Framework;
 
-namespace UnitTests
-{
+namespace UnitTests {
     [TestFixture]
-    public class NepaliCultureEnglishOutput
-    {
-        [Test, TestCaseSource("WordCases")]
-        public void DecimalOnly(decimal amount, string words)
-        {
-            CurrencyWordsConverter amt = new CurrencyWordsConverter(new CurrencyWordsConversionOptions()
-            {
-                Culture =  Culture.Nepali,
+    public class NepaliCultureEnglishOutput {
+        [Test]
+        [TestCaseSource( "WordCases" )]
+        public void DecimalOnly( decimal amount, string words ) {
+            CurrencyWordsConverter amt = new CurrencyWordsConverter( new CurrencyWordsConversionOptions() {
+                Culture = Culture.Nepali,
                 OutputFormat = OutputFormat.English
-            });
-            string result = amt.ToWords(amount);
-            Assert.AreEqual(words, result);
+            } );
+            string result = amt.ToWords( amount );
+            Assert.AreEqual( words, result );
         }
 
         private static readonly object[] WordCases =
@@ -121,5 +118,5 @@ namespace UnitTests
         };
     }
 
-    
+
 }

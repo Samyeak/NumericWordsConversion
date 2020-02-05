@@ -1,36 +1,31 @@
 ﻿using NumericWordsConversion;
 using NUnit.Framework;
 
-namespace UnitTests
-{
+namespace UnitTests {
     [TestFixture]
-    public class EnglishCulture
-    {
+    public class EnglishCulture {
         [SetUp]
-        public void Setup()
-        {
-            NumericWordsConfiguration.ConfigureConversionDefaults(options =>
-            {
-                options.SetDefaultCurrencyWordsOptions(new CurrencyWordsConversionOptions
-                {
+        public void Setup() {
+            NumericWordsConfiguration.ConfigureConversionDefaults( options => {
+                options.SetDefaultCurrencyWordsOptions( new CurrencyWordsConversionOptions {
                     Culture = Culture.International,
                     OutputFormat = OutputFormat.English,
                     CurrencyUnit = "rupees",
                     SubCurrencyUnit = "paisa"
-                });
-            });
+                } );
+            } );
         }
 
-        [Test, TestCaseSource(nameof(EnglishWordCases))]
-        public void DecimalOnly(decimal amount, string words)
-        {
+        [Test]
+        [TestCaseSource( nameof( EnglishWordCases ) )]
+        public void DecimalOnly( decimal amount, string words ) {
             string result = amount.ToCurrencyWords();
-            Assert.AreEqual(words, result);
+            Assert.AreEqual( words, result );
         }
 
-        [Test, TestCaseSource(nameof(TestCases))]
-        public string MyTestCases(decimal amount)
-        {
+        [Test]
+        [TestCaseSource( nameof( TestCases ) )]
+        public string MyTestCases( decimal amount ) {
             string result = amount.ToCurrencyWords();
             return result;
         }
@@ -150,5 +145,5 @@ namespace UnitTests
         };
     }
 
-    
+
 }
