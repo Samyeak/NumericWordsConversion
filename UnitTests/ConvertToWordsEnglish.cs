@@ -23,48 +23,48 @@ namespace UnitTests
         [Test]
         public void ZeroPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152M);
-            string expectedResult = "Thirty two thousand one hundred fifty two rupees only";
+            var actualResult = AmtToWords.ToWords(32152M);
+            var expectedResult = "Thirty two thousand one hundred fifty two rupees only";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void OnePaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.01M);
-            string expectedResult = "Thirty two thousand one hundred fifty two rupees one paisa only";
+            var actualResult = AmtToWords.ToWords(32152.01M);
+            var expectedResult = "Thirty two thousand one hundred fifty two rupees one paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void TenPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.10M);
-            string expectedResult = "Thirty two thousand one hundred fifty two rupees ten paisa only";
+            var actualResult = AmtToWords.ToWords(32152.10M);
+            var expectedResult = "Thirty two thousand one hundred fifty two rupees ten paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void ElevenPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.11M);
-            string expectedResult = "Thirty two thousand one hundred fifty two rupees eleven paisa only";
+            var actualResult = AmtToWords.ToWords(32152.11M);
+            var expectedResult = "Thirty two thousand one hundred fifty two rupees eleven paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void ThirtyPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.30M);
-            string expectedResult = "Thirty two thousand one hundred fifty two rupees thirty paisa only";
+            var actualResult = AmtToWords.ToWords(32152.30M);
+            var expectedResult = "Thirty two thousand one hundred fifty two rupees thirty paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void EightyEightPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.88M);
-            string expectedResult = "Thirty two thousand one hundred fifty two rupees eighty eight paisa only";
+            var actualResult = AmtToWords.ToWords(32152.88M);
+            var expectedResult = "Thirty two thousand one hundred fifty two rupees eighty eight paisa only";
             Assert.AreEqual(expectedResult, actualResult);
         }
 

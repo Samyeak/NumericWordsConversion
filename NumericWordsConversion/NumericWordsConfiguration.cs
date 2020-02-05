@@ -17,7 +17,7 @@ namespace NumericWordsConversion
                 throw new NullReferenceException("Numeric Words Options Initializer Option cannot be null");
             }
 
-            OptionsInitializer initializer = new OptionsInitializer();
+            var initializer = new OptionsInitializer();
             options.Invoke(initializer);
         }
 

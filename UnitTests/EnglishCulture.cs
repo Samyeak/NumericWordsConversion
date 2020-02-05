@@ -19,14 +19,14 @@ namespace UnitTests {
         [Test]
         [TestCaseSource( nameof( EnglishWordCases ) )]
         public void DecimalOnly( decimal amount, string words ) {
-            string result = amount.ToCurrencyWords();
+            var result = amount.ToCurrencyWords();
             Assert.AreEqual( words, result );
         }
 
         [Test]
         [TestCaseSource( nameof( TestCases ) )]
         public string MyTestCases( decimal amount ) {
-            string result = amount.ToCurrencyWords();
+            var result = amount.ToCurrencyWords();
             return result;
         }
 

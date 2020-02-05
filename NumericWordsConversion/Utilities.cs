@@ -26,7 +26,7 @@ namespace NumericWordsConversion
         /// <param name="options"></param>
         internal static ConversionFactory InitializeConversionFactory(NumericWordsConversionOptions options)
         {
-            ManageSuitableResources(out string[] ones, out string[] tens, out string[] scale, options);
+            ManageSuitableResources(out var ones, out var tens, out var scale, options);
             return new ConversionFactory(options, ones, tens, scale);
         }
 

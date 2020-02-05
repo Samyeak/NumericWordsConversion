@@ -7,26 +7,26 @@ namespace UnitTests {
         [Test]
         [TestCaseSource( nameof( TestCases ) )]
         public string MyTestCases( decimal amount ) {
-            CurrencyWordsConversionOptions options = new CurrencyWordsConversionOptions() {
+            var options = new CurrencyWordsConversionOptions() {
                 Culture = Culture.International,
             };
 
-            CurrencyWordsConverter amt = new CurrencyWordsConverter( options );
-            string result = amt.ToWords( amount );
+            var amt = new CurrencyWordsConverter( options );
+            var result = amt.ToWords( amount );
             return result;
         }
 
         [Test]
         [TestCaseSource( nameof( NepaliUnicodeCases ) )]
         public string NepaliUnicodeTest( decimal amount ) {
-            CurrencyWordsConversionOptions options = new CurrencyWordsConversionOptions() {
+            var options = new CurrencyWordsConversionOptions() {
                 Culture = Culture.Nepali,
                 OutputFormat = OutputFormat.Unicode,
                 EndOfWordsMarker = "मात्र"
             };
 
-            CurrencyWordsConverter amt = new CurrencyWordsConverter( options );
-            string result = amt.ToWords( amount );
+            var amt = new CurrencyWordsConverter( options );
+            var result = amt.ToWords( amount );
             return result;
         }
 

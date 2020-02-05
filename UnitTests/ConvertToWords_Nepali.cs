@@ -20,8 +20,8 @@ namespace UnitTests
         [Test]
         public void ZeroPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152M);
-            string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ मात्र";
+            var actualResult = AmtToWords.ToWords(32152M);
+            var expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ मात्र";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
@@ -29,9 +29,9 @@ namespace UnitTests
         public void OnePaisa()
         {
             //Arrange
-            string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ एक पैसा मात्र";
+            var expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ एक पैसा मात्र";
             //Act
-            string actualResult = AmtToWords.ToWords(32152.01M);
+            var actualResult = AmtToWords.ToWords(32152.01M);
             //Assert
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -39,32 +39,32 @@ namespace UnitTests
         [Test]
         public void TenPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.10M);
-            string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ दस पैसा मात्र";
+            var actualResult = AmtToWords.ToWords(32152.10M);
+            var expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ दस पैसा मात्र";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void ElevenPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.11M);
-            string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ एघार पैसा मात्र";
+            var actualResult = AmtToWords.ToWords(32152.11M);
+            var expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ एघार पैसा मात्र";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void ThirtyPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.30M);
-            string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ तीस पैसा मात्र";
+            var actualResult = AmtToWords.ToWords(32152.30M);
+            var expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ तीस पैसा मात्र";
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
         public void EightyEightPaisa()
         {
-            string actualResult = AmtToWords.ToWords(32152.88M);
-            string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ अठासी पैसा मात्र";
+            var actualResult = AmtToWords.ToWords(32152.88M);
+            var expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ अठासी पैसा मात्र";
             Assert.AreEqual(expectedResult, actualResult);
         }
 

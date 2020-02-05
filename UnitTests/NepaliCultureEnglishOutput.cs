@@ -8,11 +8,11 @@ namespace UnitTests {
         [Test]
         [TestCaseSource( "WordCases" )]
         public void DecimalOnly( decimal amount, string words ) {
-            CurrencyWordsConverter amt = new CurrencyWordsConverter( new CurrencyWordsConversionOptions() {
+            var amt = new CurrencyWordsConverter( new CurrencyWordsConversionOptions() {
                 Culture = Culture.Nepali,
                 OutputFormat = OutputFormat.English
             } );
-            string result = amt.ToWords( amount );
+            var result = amt.ToWords( amount );
             Assert.AreEqual( words, result );
         }
 

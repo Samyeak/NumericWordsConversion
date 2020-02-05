@@ -16,8 +16,8 @@ namespace UnitTests {
         [Test]
         [TestCaseSource( nameof( TestCases ) )]
         public string MyTestCases( decimal amount ) {
-            NumericWordsConverter amt = new NumericWordsConverter( new NumericWordsConversionOptions() { DecimalPlaces = 4 } );
-            string result = amt.ToWords( amount );
+            var amt = new NumericWordsConverter( new NumericWordsConversionOptions() { DecimalPlaces = 4 } );
+            var result = amt.ToWords( amount );
             return result;
         }
 
@@ -25,7 +25,7 @@ namespace UnitTests {
         [TestCaseSource( nameof( StaticExtensionEnglishCases ) )]
         public string StaticExtensionEnglish( decimal amount ) {
 
-            string result = amount.ToNumericWords();
+            var result = amount.ToNumericWords();
             return result;
         }
         private static readonly TestCaseData[] StaticExtensionEnglishCases =

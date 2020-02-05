@@ -43,15 +43,15 @@ namespace NumericWordsConversion
         /// <returns></returns>
         public string ToWords(decimal number)
         {
-            string integralDigitsString = number
+            var integralDigitsString = number
                 .ToString(CultureInfo.InvariantCulture)
                 .Split('.')
                 .ElementAt(0);
 
-            decimal fractionalDigits = number % 1;
+            var fractionalDigits = number % 1;
 
-            string integralWords = _conversionFactory.ConvertDigits(integralDigitsString);
-            string fractionalDigitsString = (_options.DecimalPlaces > -1 ? decimal.Parse(fractionalDigits.ToString($"F{_options.DecimalPlaces}", CultureInfo.InvariantCulture))
+            var integralWords = _conversionFactory.ConvertDigits(integralDigitsString);
+            var fractionalDigitsString = (_options.DecimalPlaces > -1 ? decimal.Parse(fractionalDigits.ToString($"F{_options.DecimalPlaces}", CultureInfo.InvariantCulture))
                 .ToString($"G{_options.DecimalPlaces}", CultureInfo.InvariantCulture)
                 : fractionalDigits.ToString("G", CultureInfo.InvariantCulture)
                 )
@@ -61,7 +61,7 @@ namespace NumericWordsConversion
                 return integralWords.CapitalizeFirstLetter();
             }
 
-            string fractionalWords = Empty;
+            var fractionalWords = Empty;
             fractionalDigitsString
                 .ToList()
                 .ForEach(x => fractionalWords += _conversionFactory.ToOnesWords(Convert.ToUInt16(x.ToString(CultureInfo.InvariantCulture))) + " ");
