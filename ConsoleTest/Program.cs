@@ -9,7 +9,7 @@ namespace ConsoleTest
         {
             
             var converter = new CurrencyWordsConverter();
-            var number = 123_000M;
+            const Decimal number = 123_000M;
             var words = converter.ToWords(number);
             //words = number.To
             Console.WriteLine(words);

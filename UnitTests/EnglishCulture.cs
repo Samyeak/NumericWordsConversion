@@ -6,14 +6,12 @@ namespace UnitTests {
     public class EnglishCulture {
         [SetUp]
         public void Setup() {
-            NumericWordsConfiguration.ConfigureConversionDefaults( options => {
-                options.SetDefaultCurrencyWordsOptions( new CurrencyWordsConversionOptions {
-                    Culture = Culture.International,
-                    OutputFormat = OutputFormat.English,
-                    CurrencyUnit = "rupees",
-                    SubCurrencyUnit = "paisa"
-                } );
-            } );
+            NumericWordsConfiguration.ConfigureConversionDefaults( options => OptionsInitializer.SetDefaultCurrencyWordsOptions( new CurrencyWordsConversionOptions {
+                Culture = Culture.International,
+                OutputFormat = OutputFormat.English,
+                CurrencyUnit = "rupees",
+                SubCurrencyUnit = "paisa"
+            } ) );
         }
 
         [Test]

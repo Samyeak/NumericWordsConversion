@@ -1,33 +1,24 @@
-﻿using NUnit.Framework;
-using System;
-using NumericWordsConversion;
+﻿namespace UnitTests {
 
-namespace UnitTests
-{
-    public class ExtensionFunctionEnglish
-    {
+    using System;
+    using NumericWordsConversion;
+    using NUnit.Framework;
+
+    public class ExtensionFunctionEnglish {
+
         [SetUp]
-        public void Setup()
-        {
-            NumericWordsConfiguration.ConfigureConversionDefaults(options =>
-            {
-                options.SetDefaultCurrencyWordsOptions(new CurrencyWordsConversionOptions
-                {
-                    Culture = Culture.International,
-                    OutputFormat = OutputFormat.English,
-                    CurrencyUnit = "rupees",
-                    SubCurrencyUnit = "paisa"
-                });
-            });
+        public void Setup() {
+            NumericWordsConfiguration.ConfigureConversionDefaults( options => OptionsInitializer.SetDefaultCurrencyWordsOptions( new CurrencyWordsConversionOptions {
+                Culture = Culture.International, OutputFormat = OutputFormat.English, CurrencyUnit = "rupees", SubCurrencyUnit = "paisa"
+            } ) );
         }
 
         [Test]
-        public void Extension()
-        {
-            var amt = 36253.20M;
-            var expectedResult = "Thirty six thousand two hundred fifty three rupees twenty paisa only";
+        public void Extension() {
+            const Decimal amt = 36253.20M;
+            const String expectedResult = "Thirty six thousand two hundred fifty three rupees twenty paisa only";
             var actualResult = amt.ToCurrencyWords();
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.AreEqual( expectedResult, actualResult );
         }
 
         //[Test]
@@ -39,41 +30,40 @@ namespace UnitTests
         //}
 
         [Test]
-        public void ThreeDigitFloorPaisa()
-        {
-            var amt = 11_321.924M;
-            var expectedResult = "Eleven thousand three hundred twenty one rupees ninety two paisa only";
+        public void ThreeDigitFloorPaisa() {
+            const Decimal amt = 11_321.924M;
+            const String expectedResult = "Eleven thousand three hundred twenty one rupees ninety two paisa only";
             var result = amt.ToCurrencyWords();
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual( result, expectedResult );
         }
 
         [Test]
-        public void ThreeDigitCeilingPaisa()
-        {
-            var amt = 11_321.929M;
-            var expectedResult = "Eleven thousand three hundred twenty one rupees ninety three paisa only";
+        public void ThreeDigitCeilingPaisa() {
+            const Decimal amt = 11_321.929M;
+            const String expectedResult = "Eleven thousand three hundred twenty one rupees ninety three paisa only";
             var result = amt.ToCurrencyWords();
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual( result, expectedResult );
         }
 
         [Test]
-        public void ShankhaExtension()
-        {
-            var amt = 9_800_777_660_544_100_110_321.99M;
-            var expectedResult = "Nine sextillion eight hundred quintillion seven hundred seventy seven quadrillion six hundred sixty trillion five hundred forty four billion one hundred million one hundred ten thousand three hundred twenty one rupees ninety nine paisa only";
-            var actualResult = amt.ToCurrencyWords();
-            Assert.AreEqual(expectedResult, actualResult);
-        }
+        public void ShankhaExtension() {
+            const Decimal amt = 9_800_777_660_544_100_110_321.99M;
 
-        [Test]
-        public void PaisaOnly()
-        {
-            var amt = 0.20M;
-            var expectedResult = "Twenty paisa only";
+            const String expectedResult = "Nine sextillion eight hundred quintillion seven hundred seventy seven quadrillion six hundred sixty trillion five hundred forty four billion one hundred million one hundred ten thousand three hundred twenty one rupees ninety nine paisa only";
 
             var actualResult = amt.ToCurrencyWords();
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.AreEqual( expectedResult, actualResult );
+        }
+
+        [Test]
+        public void PaisaOnly() {
+            const Decimal amt = 0.20M;
+            const String expectedResult = "Twenty paisa only";
+
+            var actualResult = amt.ToCurrencyWords();
+            Assert.AreEqual( expectedResult, actualResult );
         }
 
     }
+
 }

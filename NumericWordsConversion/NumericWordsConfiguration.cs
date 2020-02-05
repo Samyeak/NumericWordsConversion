@@ -46,7 +46,7 @@ namespace NumericWordsConversion
         /// Uses default options if assigned null
         /// </summary>
         /// <param name="numericWordsOptions">Options for Numeric Words Conversion</param>
-        public void SetDefaultNumericWordsOptions(NumericWordsConversionOptions numericWordsOptions)
+        public static void SetDefaultNumericWordsOptions(NumericWordsConversionOptions numericWordsOptions)
         {
             GlobalOptions.NumericWordsOptions = numericWordsOptions ?? new NumericWordsConversionOptions();
             GlobalOptions.NumericWordsConverter = new NumericWordsConverter(GlobalOptions.NumericWordsOptions);
@@ -57,7 +57,7 @@ namespace NumericWordsConversion
         /// Uses default options if assigned null
         /// </summary>
         /// <param name="currencyWordsOptions"></param>
-        public void SetDefaultCurrencyWordsOptions(CurrencyWordsConversionOptions currencyWordsOptions)
+        public static void SetDefaultCurrencyWordsOptions(CurrencyWordsConversionOptions currencyWordsOptions)
         {
             GlobalOptions.CurrencyWordsOptions = currencyWordsOptions ?? new CurrencyWordsConversionOptions();
             GlobalOptions.CurrencyWordsConverter = new CurrencyWordsConverter(GlobalOptions.CurrencyWordsOptions);
