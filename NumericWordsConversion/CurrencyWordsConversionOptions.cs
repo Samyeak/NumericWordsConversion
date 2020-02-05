@@ -14,15 +14,15 @@
         {
             get
             {
-                if (_currencyUnit != null) {
+                if ( this._currencyUnit != null) {
                     return this._currencyUnit;
                 }
 
-                WordResources.CurrencyDefaults.TryGetValue((Culture, OutputFormat), out var units);
-                _currencyUnit = units.CurrencyUnit;
-                return _currencyUnit;
+                WordResources.CurrencyDefaults.TryGetValue(( this.Culture, this.OutputFormat), out var units);
+                this._currencyUnit = units.CurrencyUnit;
+                return this._currencyUnit;
             }
-            set => _currencyUnit = value;
+            set => this._currencyUnit = value;
         }
 
         private string _currencyUnit;
@@ -35,15 +35,15 @@
         {
             get
             {
-                if (_subCurrencyUnit != null) {
+                if ( this._subCurrencyUnit != null) {
                     return this._subCurrencyUnit;
                 }
 
-                WordResources.CurrencyDefaults.TryGetValue((Culture, OutputFormat), out var units);
-                _subCurrencyUnit = units.SubCurrencyUnit;
-                return _subCurrencyUnit;
+                WordResources.CurrencyDefaults.TryGetValue(( this.Culture, this.OutputFormat), out var units);
+                this._subCurrencyUnit = units.SubCurrencyUnit;
+                return this._subCurrencyUnit;
             }
-            set => _subCurrencyUnit = value;
+            set => this._subCurrencyUnit = value;
         }
         private string _subCurrencyUnit;
         /// <summary>
@@ -54,15 +54,15 @@
         {
             get
             {
-                if (_endOfWordsMarker != null) {
+                if ( this._endOfWordsMarker != null) {
                     return this._endOfWordsMarker;
                 }
 
-                WordResources.CurrencyDefaults.TryGetValue((Culture, OutputFormat), out var units);
-                _endOfWordsMarker = units.EndOfWordsMarker;
-                return _endOfWordsMarker;
+                WordResources.CurrencyDefaults.TryGetValue(( this.Culture, this.OutputFormat), out var units);
+                this._endOfWordsMarker = units.EndOfWordsMarker;
+                return this._endOfWordsMarker;
             }
-            set => _endOfWordsMarker = value;
+            set => this._endOfWordsMarker = value;
         }
         private string _endOfWordsMarker;
 

@@ -17,18 +17,18 @@ namespace NumericWordsConversion
 
         public ConversionFactory(NumericWordsConversionOptions options)
         {
-            _options = options;
-            Utilities.ManageSuitableResources(out _ones, out _tens, out _scale, options);
+            this._options = options;
+            Utilities.ManageSuitableResources(out this._ones, out this._tens, out this._scale, options);
         }
         public ConversionFactory(NumericWordsConversionOptions options, string[] ones, string[] tens, string[] scale)
         {
-            _options = options;
-            _ones = ones;
-            _tens = tens;
-            _scale = scale;
+            this._options = options;
+            this._ones = ones;
+            this._tens = tens;
+            this._scale = scale;
         }
 
-        internal string ToOnesWords(ushort digit) => _ones[digit];
+        internal string ToOnesWords(ushort digit) => this._ones[digit];
 
         internal string ToTensWord(string tenth)
         {
@@ -39,21 +39,21 @@ namespace NumericWordsConversion
 
             string words;
 
-            if (dec < _options.ResourceLimitIndex)
+            if (dec < this._options.ResourceLimitIndex)
             {
-                words = _ones[dec];
+                words = this._ones[dec];
             }
             else
             {
                 if (dec % 10 == 0)
                 {
-                    words = _tens[dec / 10];
+                    words = this._tens[dec / 10];
                 }
                 else
                 {
                     int first = Convert.ToUInt16(tenth.Substring(0, 1), CultureInfo.InvariantCulture);
                     int second = Convert.ToUInt16(tenth.Substring(1, 1), CultureInfo.InvariantCulture);
-                    words = Concat(_tens[first], " ", _ones[second]);
+                    words = Concat( this._tens[first], " ", this._ones[second]);
                 }
             }
 
@@ -66,10 +66,10 @@ namespace NumericWordsConversion
             if (hundred.Length == 3)
             {
                 int hundredth = Convert.ToInt16(hundred.Substring(0, 1), CultureInfo.InvariantCulture);
-                inWords = hundredth > 0 ? Concat(_ones[hundredth], " ", _scale[1], " ") : Empty;
+                inWords = hundredth > 0 ? Concat( this._ones[hundredth], " ", this._scale[1], " ") : Empty;
                 hundred = hundred.Substring(1, 2);
             }
-            inWords += ToTensWord(hundred);
+            inWords += this.ToTensWord(hundred);
             return inWords.Trim();
         }
 
@@ -86,7 +86,7 @@ namespace NumericWordsConversion
 
             var builder = new StringBuilder();
             int scaleMapIndex;
-            if (_options.Culture == Culture.International) {
+            if ( this._options.Culture == Culture.International) {
                 scaleMapIndex = (int)Math.Ceiling((decimal)digits.Length / 3);
             }
             else {
@@ -99,26 +99,26 @@ namespace NumericWordsConversion
                 switch (i)
                 {
                     case 1: //For the Hundreds, tens and ones
-                        inWords = ToHundredthWords(digits);
+                        inWords = this.ToHundredthWords(digits);
                         if (!IsNullOrEmpty(inWords)) {
                             builder.Append(Concat(inWords.Trim(), " "));
                         }
 
                         break;
                     default: //For Everything Greater than hundreds
-                        if (_options.Culture == Culture.International)
+                        if ( this._options.Culture == Culture.International)
                         {
                             var length = (digits.Length % ((i - 1) * 3 + 1)) + 1;
                             var hundreds = digits.Substring(0, length);
                             digits = digits.Remove(0, length);
-                            inWords = ToHundredthWords(hundreds);
+                            inWords = this.ToHundredthWords(hundreds);
                         }
                         else
                         {
                             var length = (digits.Length % 2 == 0) ? 1 : 2;
                             var hundreds = digits.Substring(0, length);
                             digits = digits.Remove(0, length);
-                            inWords = ToTensWord(hundreds);
+                            inWords = this.ToTensWord(hundreds);
                         }
 
                         if (!IsNullOrEmpty(inWords.Trim())) {

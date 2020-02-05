@@ -14,7 +14,7 @@
         /// </summary>
         public CurrencyWordsConverter() {
             this._options = GlobalOptions.CurrencyWordsOptions;
-            _conversionFactory = Utilities.InitializeConversionFactory( _options );
+            this._conversionFactory = Utilities.InitializeConversionFactory( this._options );
         }
 
         /// <summary>
@@ -22,7 +22,7 @@
         /// </summary>
         public CurrencyWordsConverter( CurrencyWordsConversionOptions options ) {
             this._options = options;
-            _conversionFactory = Utilities.InitializeConversionFactory( _options );
+            this._conversionFactory = Utilities.InitializeConversionFactory( this._options );
         }
         #endregion
 
@@ -41,7 +41,7 @@
                 .ToString( CultureInfo.InvariantCulture )
                 .Split( '.' )
                 .ElementAt( 0 );
-            var fractionalDigitsString = fractionalDigits.ToString( _options.DecimalPlaces > -1 ? $"F{_options.DecimalPlaces}" : "G",
+            var fractionalDigitsString = fractionalDigits.ToString( this._options.DecimalPlaces > -1 ? $"F{this._options.DecimalPlaces}" : "G",
                                                  CultureInfo.InvariantCulture )
                                              .Split( '.' )
                                              .ElementAtOrDefault( 1 ) ?? Empty;
@@ -51,25 +51,27 @@
 
             var integralWords = Empty;
             if ( decimal.Parse( integralDigitsString ) > 0 ) {
-                integralWords = _conversionFactory.ConvertDigits( integralDigitsString );
-                integralWords = _options.CurrencyNotationType == NotationType.Prefix
-                    ? _options.CurrencyUnit + " " + integralWords
-                    : integralWords + " " + _options.CurrencyUnit;
+                integralWords = this._conversionFactory.ConvertDigits( integralDigitsString );
+                integralWords = this._options.CurrencyNotationType == NotationType.Prefix
+                    ?
+                    this._options.CurrencyUnit + " " + integralWords
+                    : integralWords + " " + this._options.CurrencyUnit;
             }
 
             if ( int.Parse( fractionalDigitsString ) <= 0 || IsNullOrEmpty( fractionalDigitsString ) ) {
                 return Concat( integralWords, ( IsNullOrEmpty( this._options.EndOfWordsMarker ) ? "" : " " + this._options.EndOfWordsMarker ) ).CapitalizeFirstLetter();
             }
 
-            var fractionalWords = _conversionFactory.ConvertDigits( fractionalDigitsString );
-            fractionalWords = _options.SubCurrencyNotationType == NotationType.Prefix
-                ? _options.SubCurrencyUnit + " " + fractionalWords
-                : fractionalWords + " " + _options.SubCurrencyUnit;
+            var fractionalWords = this._conversionFactory.ConvertDigits( fractionalDigitsString );
+            fractionalWords = this._options.SubCurrencyNotationType == NotationType.Prefix
+                ?
+                this._options.SubCurrencyUnit + " " + fractionalWords
+                : fractionalWords + " " + this._options.SubCurrencyUnit;
 
             fractionalWords = (
                 $"{integralWords} " +
-                $"{( IsNullOrEmpty( _options.CurrencyUnitSeparator ) ? "" : _options.CurrencyUnitSeparator + " " )}" +
-                $"{fractionalWords.TrimEnd()}{( IsNullOrEmpty( _options.EndOfWordsMarker ) ? "" : " " + _options.EndOfWordsMarker )}" )
+                $"{( IsNullOrEmpty( this._options.CurrencyUnitSeparator ) ? "" : this._options.CurrencyUnitSeparator + " " )}" +
+                $"{fractionalWords.TrimEnd()}{( IsNullOrEmpty( this._options.EndOfWordsMarker ) ? "" : " " + this._options.EndOfWordsMarker )}" )
                     .Trim().CapitalizeFirstLetter();
 
             return fractionalWords;

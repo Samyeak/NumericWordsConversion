@@ -23,7 +23,7 @@ namespace NumericWordsConversion
         public NumericWordsConverter()
         {
             this._options = GlobalOptions.NumericWordsOptions;
-            _conversionFactory = Utilities.InitializeConversionFactory(_options);
+            this._conversionFactory = Utilities.InitializeConversionFactory( this._options);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace NumericWordsConversion
         public NumericWordsConverter(NumericWordsConversionOptions options)
         {
             this._options = options;
-            _conversionFactory = Utilities.InitializeConversionFactory(_options);
+            this._conversionFactory = Utilities.InitializeConversionFactory( this._options);
         }
         #endregion
 
@@ -50,9 +50,9 @@ namespace NumericWordsConversion
 
             var fractionalDigits = number % 1;
 
-            var integralWords = _conversionFactory.ConvertDigits(integralDigitsString);
-            var fractionalDigitsString = (_options.DecimalPlaces > -1 ? decimal.Parse(fractionalDigits.ToString($"F{_options.DecimalPlaces}", CultureInfo.InvariantCulture))
-                .ToString($"G{_options.DecimalPlaces}", CultureInfo.InvariantCulture)
+            var integralWords = this._conversionFactory.ConvertDigits(integralDigitsString);
+            var fractionalDigitsString = ( this._options.DecimalPlaces > -1 ? decimal.Parse(fractionalDigits.ToString($"F{this._options.DecimalPlaces}", CultureInfo.InvariantCulture))
+                .ToString($"G{this._options.DecimalPlaces}", CultureInfo.InvariantCulture)
                 : fractionalDigits.ToString("G", CultureInfo.InvariantCulture)
                 )
                     .Split('.')
@@ -64,9 +64,9 @@ namespace NumericWordsConversion
             var fractionalWords = Empty;
             fractionalDigitsString
                 .ToList()
-                .ForEach(x => fractionalWords += _conversionFactory.ToOnesWords(Convert.ToUInt16(x.ToString(CultureInfo.InvariantCulture))) + " ");
+                .ForEach(x => fractionalWords += this._conversionFactory.ToOnesWords(Convert.ToUInt16(x.ToString(CultureInfo.InvariantCulture))) + " ");
 
-            return $"{integralWords} {_options.DecimalSeparator} {fractionalWords.TrimEnd()}".CapitalizeFirstLetter();
+            return $"{integralWords} {this._options.DecimalSeparator} {fractionalWords.TrimEnd()}".CapitalizeFirstLetter();
         }
     }
 }

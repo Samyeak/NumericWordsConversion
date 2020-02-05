@@ -36,7 +36,8 @@ namespace NumericWordsConversion
         /// </summary>
         public string DecimalSeparator
         {
-            get => _decimalSeparator ?? (Culture, OutputFormat) switch
+            get =>
+                this._decimalSeparator ?? ( this.Culture, this.OutputFormat) switch
             {
                 (Culture.International, _) => "point",
                 (Culture.Nepali, OutputFormat.English) => "point",
@@ -45,9 +46,9 @@ namespace NumericWordsConversion
                 (Culture.Hindi, OutputFormat.English) => "point",
                 (Culture.Hindi, OutputFormat.Devnagari) => "bzdnj",
                 (Culture.Hindi, OutputFormat.Unicode) => "दशमलव",
-                _ => throw new ArgumentOutOfRangeException(nameof(Culture))
+                _ => throw new ArgumentOutOfRangeException(nameof( this.Culture))
             };
-            set => _decimalSeparator = value;
+            set => this._decimalSeparator = value;
         }
 
         private string _decimalSeparator;
