@@ -1,81 +1,87 @@
 ﻿namespace NumericWordsConversion {
+
+    using System;
+    using System.Collections.Concurrent;
     using System.Globalization;
     using System.Linq;
+    using JetBrains.Annotations;
     using static System.String;
+
     public class CurrencyWordsConverter {
-        private readonly ConversionFactory _conversionFactory;
-        private readonly CurrencyWordsConversionOptions _options;
-
-        #region Constructors
 
         /// <summary>
-        /// Creates an instance of NumberConverter with default options
-        /// <br/> Culture: International, OutputFormat: English, DecimalPlaces : 2
+        /// This cache seems to have cut the UnitTests run length in half (25ms instead of 54ms).
         /// </summary>
-        public CurrencyWordsConverter() {
-            this._options = GlobalOptions.CurrencyWordsOptions;
-            this._conversionFactory = Utilities.InitializeConversionFactory( this._options );
+        [NotNull]
+        private ConcurrentDictionary<Decimal , String> Cache { get; } = new ConcurrentDictionary<Decimal, String>();
+
+        [NotNull]
+        private ConversionFactory ConversionFactory { get; }
+
+        [NotNull]
+        private CurrencyWordsConversionOptions Options { get; }
+
+        /// <summary>Creates an instance of NumberConverter with specified options.
+        /// <para>Default options: Culture: International, OutputFormat: English, DecimalPlaces : 2</para>
+        /// </summary>
+        public CurrencyWordsConverter( [CanBeNull] CurrencyWordsConversionOptions? options = null ) {
+            this.Options = options ?? GlobalOptions.CurrencyWordsOptions;
+            this.ConversionFactory = Utilities.InitializeConversionFactory( this.Options );
         }
 
-        /// <summary>
-        /// Creates an instance of NumberConverter with specified options
-        /// </summary>
-        public CurrencyWordsConverter( CurrencyWordsConversionOptions options ) {
-            this._options = options;
-            this._conversionFactory = Utilities.InitializeConversionFactory( this._options );
-        }
-        #endregion
-
-        /// <summary>
-        /// Converts to words as per defined option
-        /// </summary>
+        /// <summary>Converts to words as per defined option</summary>
         /// <param name="number"></param>
-        /// <returns></returns>
+        [NotNull]
         public string ToWords( decimal number ) {
+
+            //TODO Add in a ConcurrentDictionary cache, self-limiting so it doesn't eat up too much memory.
+            if ( this.Cache.TryGetValue( number, out var result ) && !IsNullOrWhiteSpace( result ) ) {
+                return result;
+            }
+
             if ( number <= 0 ) {
-                return Empty;   //TODO Add support for negative numbers.
+                return Empty; //TODO Add support for negative numbers and zero!
             }
 
             var fractionalDigits = number % 1;
-            var integralDigitsString = number
-                .ToString( CultureInfo.InvariantCulture )
-                .Split( '.' )
-                .ElementAt( 0 );
-            var fractionalDigitsString = fractionalDigits.ToString( this._options.DecimalPlaces > -1 ? $"F{this._options.DecimalPlaces}" : "G",
-                                                 CultureInfo.InvariantCulture )
-                                             .Split( '.' )
-                                             .ElementAtOrDefault( 1 ) ?? Empty;
-            if ( decimal.Parse( integralDigitsString ) <= 0 && decimal.Parse( fractionalDigitsString ) <= 0 ) {
+            var integralDigitsString = number.ToString( CultureInfo.InvariantCulture ).Split( '.' ).ElementAt( 0 );
+
+            var fractionalDigitsString = fractionalDigits.ToString( this.Options.DecimalPlaces > -1 ? $"F{this.Options.DecimalPlaces}" : "G", CultureInfo.InvariantCulture )
+                                             .Split( '.' ).ElementAtOrDefault( 1 ) ?? Empty;
+
+            if ( Decimal.Parse( integralDigitsString ) <= 0 && Decimal.Parse( fractionalDigitsString ) <= 0 ) {
                 return Empty;
             }
 
             var integralWords = Empty;
-            if ( decimal.Parse( integralDigitsString ) > 0 ) {
-                integralWords = this._conversionFactory.ConvertDigits( integralDigitsString );
-                integralWords = this._options.CurrencyNotationType == NotationType.Prefix
-                    ?
-                    this._options.CurrencyUnit + " " + integralWords
-                    : integralWords + " " + this._options.CurrencyUnit;
+
+            if ( Decimal.Parse( integralDigitsString ) > 0 ) {
+                integralWords = this.ConversionFactory.ConvertDigits( integralDigitsString );
+
+                integralWords = this.Options.CurrencyNotationType == NotationType.Prefix ?
+                    $"{this.Options.CurrencyUnit} {integralWords}" :
+                    $"{integralWords} {this.Options.CurrencyUnit}";
             }
 
-            if ( int.Parse( fractionalDigitsString ) <= 0 || IsNullOrEmpty( fractionalDigitsString ) ) {
-                return Concat( integralWords, ( IsNullOrEmpty( this._options.EndOfWordsMarker ) ? "" : " " + this._options.EndOfWordsMarker ) ).CapitalizeFirstLetter();
+            if ( Int32.Parse( fractionalDigitsString ) <= 0 || IsNullOrEmpty( fractionalDigitsString ) ) {
+                result = Concat( integralWords, IsNullOrEmpty( this.Options.EndOfWordsMarker ) ? "" : $" {this.Options.EndOfWordsMarker}" ).CapitalizeFirstLetter();
+
+                return (this.Cache[ number ] = result) ?? throw new InvalidOperationException();
             }
 
-            var fractionalWords = this._conversionFactory.ConvertDigits( fractionalDigitsString );
-            fractionalWords = this._options.SubCurrencyNotationType == NotationType.Prefix
-                ?
-                this._options.SubCurrencyUnit + " " + fractionalWords
-                : fractionalWords + " " + this._options.SubCurrencyUnit;
+            var fractionalWords = this.ConversionFactory.ConvertDigits( fractionalDigitsString );
 
-            fractionalWords = (
-                $"{integralWords} " +
-                $"{( IsNullOrEmpty( this._options.CurrencyUnitSeparator ) ? "" : this._options.CurrencyUnitSeparator + " " )}" +
-                $"{fractionalWords.TrimEnd()}{( IsNullOrEmpty( this._options.EndOfWordsMarker ) ? "" : " " + this._options.EndOfWordsMarker )}" )
-                    .Trim().CapitalizeFirstLetter();
+            fractionalWords = this.Options.SubCurrencyNotationType == NotationType.Prefix ?
+                $"{this.Options.SubCurrencyUnit} {fractionalWords}" :
+                $"{fractionalWords} {this.Options.SubCurrencyUnit}";
 
-            return fractionalWords;
+            fractionalWords = ( $"{integralWords} " + $"{( IsNullOrEmpty( this.Options.CurrencyUnitSeparator ) ? "" : $"{this.Options.CurrencyUnitSeparator} " )}" +
+                                $"{fractionalWords.TrimEnd()}{( IsNullOrEmpty( this.Options.EndOfWordsMarker ) ? "" : $" {this.Options.EndOfWordsMarker}" )}" ).Trim()
+                .CapitalizeFirstLetter();
 
+            return (this.Cache[ number ] = fractionalWords) ?? throw new InvalidOperationException();
         }
+
     }
+
 }

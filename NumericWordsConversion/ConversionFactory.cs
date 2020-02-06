@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Text;
+    using JetBrains.Annotations;
     using static System.String;
 
     /// <summary>Used to simply map numbers with their respective words output as per the specified options</summary>
@@ -10,7 +11,7 @@
 
         private readonly string[] _ones;
 
-        private readonly NumericWordsConversionOptions _options;
+        internal readonly NumericWordsConversionOptions _options;
 
         private readonly string[] _scale;
 
@@ -28,8 +29,10 @@
             this._scale = scale;
         }
 
+        [NotNull]
         internal string ToOnesWords( ushort digit ) => this._ones[ digit ];
 
+        [NotNull]
         internal string ToTensWord( string tenth ) {
             int dec = Convert.ToUInt16( tenth, CultureInfo.InvariantCulture );
 
@@ -49,19 +52,20 @@
                 else {
                     int first = Convert.ToUInt16( tenth.Substring( 0, 1 ), CultureInfo.InvariantCulture );
                     int second = Convert.ToUInt16( tenth.Substring( 1, 1 ), CultureInfo.InvariantCulture );
-                    words = Concat( this._tens[ first ], " ", this._ones[ second ] );
+                    words = $"{this._tens[ first ]} {this._ones[ second ]}";
                 }
             }
 
             return words;
         }
 
+        [NotNull]
         internal string ToHundredthWords( string hundred ) {
             var inWords = Empty;
 
             if ( hundred.Length == 3 ) {
                 int hundredth = Convert.ToInt16( hundred.Substring( 0, 1 ), CultureInfo.InvariantCulture );
-                inWords = hundredth > 0 ? Concat( this._ones[ hundredth ], " ", this._scale[ 1 ], " " ) : Empty;
+                inWords = hundredth > 0 ? $"{this._ones[ hundredth ]} {this._scale[ 1 ]} " : Empty;
                 hundred = hundred.Substring( 1, 2 );
             }
 
@@ -72,7 +76,6 @@
 
         /// <summary>Responsible for converting any input digits to words</summary>
         /// <param name="digits"></param>
-        /// <returns></returns>
         internal string ConvertDigits( string digits ) {
             if ( digits == "0" ) {
                 return this._ones[ 0 ];
@@ -96,26 +99,26 @@
                         inWords = this.ToHundredthWords( digits );
 
                         if ( !IsNullOrEmpty( inWords ) ) {
-                            builder.Append( Concat( inWords.Trim(), " " ) );
+                            builder.Append( $"{inWords.Trim()} " );
                         }
 
                         break;
                     default: //For Everything Greater than hundreds
                         if ( this._options.Culture == Culture.International ) {
-                            var length = (digits.Length % ( (( i - 1 ) * 3) + 1 )) + 1;
+                            var length = (digits.Length % ( (( i - 1 ) * 3) + 1 )) + 1; //TODO magic numbers
                             var hundreds = digits.Substring( 0, length );
                             digits = digits.Remove( 0, length );
                             inWords = this.ToHundredthWords( hundreds );
                         }
                         else {
-                            var length = digits.Length % 2 == 0 ? 1 : 2;
+                            var length = digits.Length % 2 == 0 ? 1 : 2;    //TODO magic numbers
                             var hundreds = digits.Substring( 0, length );
                             digits = digits.Remove( 0, length );
                             inWords = this.ToTensWord( hundreds );
                         }
 
                         if ( !IsNullOrEmpty( inWords.Trim() ) ) {
-                            builder.Append( Concat( inWords.Trim(), " ", this._scale[ i ], " " ) );
+                            builder.Append( $"{inWords.Trim()} {this._scale[ i ]} " );
                         }
 
                         break;
