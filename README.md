@@ -1,6 +1,7 @@
 # Numeric Words Conversion
 ![Build](https://github.com/Samyeak/NumericWordsConversion/workflows/.NET%20Core/badge.svg)
 ![Unit Tests](https://github.com/Samyeak/NumericWordsConversion/workflows/Unit%20Tests/badge.svg?event=push)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSamyeak%2FNumericWordsConversion.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSamyeak%2FNumericWordsConversion?ref=badge_shield)
 
 Numeric Words Conversion is a C# library for converting numeric into words. The goal is to create a simple customizable library which can easily be used to convert any numbers or currencies to words.
 
@@ -97,6 +98,9 @@ amount.ToCurrencyWords(); //Outputs: Rupees one lakh and one paisa.
 [Under GNU GENERAL PUBLIC LICENSE V3](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 <!--
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSamyeak%2FNumericWordsConversion.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FSamyeak%2FNumericWordsConversion?ref=badge_large)
+
 ## Install
 
 #### [NuGet Gallery](http://nuget.org/packages/todo)
