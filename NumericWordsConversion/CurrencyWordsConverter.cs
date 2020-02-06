@@ -66,7 +66,7 @@
             if ( Int32.Parse( fractionalDigitsString ) <= 0 || IsNullOrEmpty( fractionalDigitsString ) ) {
                 result = Concat( integralWords, IsNullOrEmpty( this.Options.EndOfWordsMarker ) ? "" : $" {this.Options.EndOfWordsMarker}" ).CapitalizeFirstLetter();
 
-                return (this.Cache[ number ] = result) ?? throw new InvalidOperationException();
+                return this.Cache[ number ] = result;
             }
 
             var fractionalWords = this.ConversionFactory.ConvertDigits( fractionalDigitsString );
@@ -79,7 +79,7 @@
                                 $"{fractionalWords.TrimEnd()}{( IsNullOrEmpty( this.Options.EndOfWordsMarker ) ? "" : $" {this.Options.EndOfWordsMarker}" )}" ).Trim()
                 .CapitalizeFirstLetter();
 
-            return (this.Cache[ number ] = fractionalWords) ?? throw new InvalidOperationException();
+            return this.Cache[ number ] = fractionalWords;
         }
 
     }

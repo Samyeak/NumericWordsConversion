@@ -8,7 +8,7 @@
     public class NumericWordsConversionOptions {
 
         [CanBeNull]
-        private string _decimalSeparator;
+        private readonly string? _decimalSeparator;
 
         /// <summary>In order to use generic algorithm for all the numeral system, this is used to map suitable resources as per different numeral system.</summary>
         internal int ResourceLimitIndex => this.OutputFormat == OutputFormat.English ? 20 : 100;
