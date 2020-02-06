@@ -1,20 +1,21 @@
-﻿using NumericWordsConversion;
-using System;
+﻿namespace ConsoleTest {
 
-namespace ConsoleTest
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            
-            CurrencyWordsConverter converter = new CurrencyWordsConverter();
-            decimal number = 123_000M;
-            string words = converter.ToWords(number);
+    using System;
+    using NumericWordsConversion;
+
+    public static class Program {
+
+        public static void Main() {
+
+            var converter = new CurrencyWordsConverter();
+            const Decimal number = 123_000M;
+            var words = converter.ToWords( number );
+
             //words = number.To
-            Console.WriteLine(words);
+            Console.WriteLine( words );
             Console.ReadKey();
         }
 
     }
+
 }

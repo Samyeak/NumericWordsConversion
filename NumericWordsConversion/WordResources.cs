@@ -1,38 +1,30 @@
-﻿using System.Collections.Generic;
+﻿namespace NumericWordsConversion {
 
-namespace NumericWordsConversion
-{
-    internal static class WordResources
-    {
+    using System.Collections.Generic;
+    using JetBrains.Annotations;
+
+    internal static class WordResources {
+
+        [NotNull]
+        public static IDictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)> CurrencyDefaults {
+            get;
+        }
+        = new Dictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)>
+        {
+            {(Culture.International, OutputFormat.English), ("dollar", "cents", "only")},
+            {(Culture.Nepali, OutputFormat.English), ("rupees", "paisa", "only")},
+            {(Culture.Nepali, OutputFormat.Unicode), ("रूपैयाँ", "पैसा", "मात्र")},
+            {(Culture.Nepali, OutputFormat.Devnagari), ("¿k}ofF", "k};f", "dfq")}
+            //TODO: ADD FOR HINDI
+        };
+
         /**
          * Number Notation has been added up to 10^39
          * Decimal type supports up to 10^27
          */
-        public static readonly string[] ScaleEng = { "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion", "undecillion", "duodecillion " };
-        public static readonly string[] ScaleNep = { "", "सय", "हजार", "लाख", "करोड", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
-        public static readonly string[] ScaleNepEnglish = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha", "Upadh", "Anka", "Jald", "Madh", "Parardha", "Anta", "Mahaanta", "Shishanta", "Singhar", "Maha Singhar", "Adanta Singhar" }; //Pow(10,39)
-        public static readonly string[] ScaleDevnagari = { "", ";o", "xhf/", "nfv", "s/f]8", "c/a", "v/a", "gLn", "kß", "z+v", "pkfw", "c+s", "hNb", "dw", "k/w{", "cGt", "dxfcGt", "lzzGt", "l;+3/", "dxfl;+x/", "cbGt l;+x/" };
-        public static readonly string[] ScaleHindi = { "", "सौ", "हजार", "लाख", "करोड़", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
 
-        //ENGLISH WORDS RESOURCE
-        public static readonly string[] OnesEnglish = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-        public static readonly string[] TensEnglish = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-
-        //NEPALI WORDS RESOURCE
-        public static readonly string[] TensNep = { "", "दस", "बीस", "तीस", "चालीस", "पचास", "साठी", "सतरी", "अस्सी", "नब्बे" };
-        public static readonly string[] TensDevnagari = { "", "b;", "aL;", "tL;", "rfnL;", "krf;", ";f7L", ";t/L", "c:;L", "gAa]" };
-
-        public static readonly string[] OnesNep = { "सुन्य", "एक", "दुई", "तीन", "चार", "पाँच", "छ", "सात", "आठ", "नौ", "दस",
-            "एघार", "बाह्र", "तेह्र", "चौध", "पन्ध्र", "सोह्र", "सत्र", "अठाह्र", "उन्नाइस", "बीस", "एकाइस",
-            "बाइस", "तेइस", "चौबीस", "पचीस", "छब्बीस", "सत्ताइस", "अठ्ठाइस", "उनन्तीस", "तीस",
-            "एकतीस", "बतीस", "तेतीस", "चौतीस", "पैतीस", "छतीस", "सरतीस", "अरतीस", "उननचालीस", "चालीस",
-            "एकचालीस", "बयालिस", "तीरचालीस", "चौवालिस", "पैंतालिस", "छयालिस", "सरचालीस", "अरचालीस", "उननचास", "पचास",
-            "एकाउन्न", "बाउन्न", "त्रिपन्न", "चौवन्न", "पच्पन्न", "छपन्न", "सन्ताउन्न", "अन्ठाउँन्न", "उनान्न्साठी", "साठी",
-            "एकसाठी", "बासाठी", "तीरसाठी", "चौंसाठी", "पैसाठी", "छैसठी", "सत्सठ्ठी", "अर्सठ्ठी", "उनन्सत्तरी", "सतरी",
-            "एकहत्तर", "बहत्तर", "त्रिहत्तर", "चौहत्तर", "पचहत्तर", "छहत्तर", "सत्हत्तर", "अठ्हत्तर", "उनास्सी", "अस्सी",
-            "एकासी", "बयासी", "त्रीयासी", "चौरासी", "पचासी", "छयासी", "सतासी", "अठासी", "उनान्नब्बे", "नब्बे",
-            "एकान्नब्बे", "बयान्नब्बे", "त्रियान्नब्बे", "चौरान्नब्बे", "पंचान्नब्बे", "छयान्नब्बे", "सन्तान्‍नब्बे", "अन्ठान्नब्बे", "उनान्सय"
-        };
+        //TODO Minor optimization.. these arrays could be converted to Lazy<string[]> so any unused languages don't have to initialized on startup, only once used.
+        //TODO Minor adjustment: these arrays could also be moved into static sub-classes Ones() and Tens(). Won't make much difference if no other languages are added in the future.
 
         public static readonly string[] OnesDevnagari = { ";'Go", "Ps", "b'O{", "tLg", "rf/", "kfFr", "5", ";ft", "cf7", "gf}", "b;",
             "P3f/", "afx|", "t]x|", "rf}w", "kG„", ";f]x|", ";q", "c7fx|", "pGgfO;", "aL;", "PsfO;",
@@ -46,7 +38,11 @@ namespace NumericWordsConversion
             "PsfGgAa]", "aofGgAa]", "lqofGgAa]", "rf}/fGgAa]", "k+rfGgAa]", "5ofGgAa]", ";GtfG‍gAa]", "cG7fGgAa]", "pgfG;o"
         };
 
-        public static readonly string[] TensHindi = { "", "दस", "बीस", "तीस", "चालीस", "पचास", "साठ", "सत्तर", "अस्सी", "नब्बे" };
+        //ENGLISH WORDS RESOURCE
+        public static readonly string[] OnesEnglish = {
+            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+            "seventeen", "eighteen", "nineteen"
+        };
 
         public static readonly string[] OnesHindi = { "सुन्य", "एक", "दो", "तीन", "चार", "पाँच", "छह", "सात", "आठ", "नौ", "दस",
             "ग्यारह", "बारह", "तेरह", "चौदह", "पन्द्रह", "सोलह", "सत्रह", "अठारह", "उन्नीस", "बीस",
@@ -60,15 +56,36 @@ namespace NumericWordsConversion
             "इक्यानबे", "बानबे", "तिरानबे", "चौरानबे", "पंचानबे", "छियानबे", "सत्तानबे", "अट्ठानबे", "निन्यानबे"
         };
 
-
-        public static IDictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)> CurrencyDefaults
-        = new Dictionary<(Culture culture, OutputFormat outputFormat), (string CurrencyUnit, string SubCurrencyUnit, string EndOfWordsMarker)>
-        {
-            {(Culture.International, OutputFormat.English), ("dollar", "cents", "only")},
-            {(Culture.Nepali, OutputFormat.English), ("rupees", "paisa", "only")},
-            {(Culture.Nepali, OutputFormat.Unicode), ("रूपैयाँ", "पैसा", "मात्र")},
-            {(Culture.Nepali, OutputFormat.Devnagari), ("¿k}ofF", "k};f", "dfq")}
-            //TODO: ADD FOR HINDI
+        public static readonly string[] OnesNep = { "सुन्य", "एक", "दुई", "तीन", "चार", "पाँच", "छ", "सात", "आठ", "नौ", "दस",
+            "एघार", "बाह्र", "तेह्र", "चौध", "पन्ध्र", "सोह्र", "सत्र", "अठाह्र", "उन्नाइस", "बीस", "एकाइस",
+            "बाइस", "तेइस", "चौबीस", "पचीस", "छब्बीस", "सत्ताइस", "अठ्ठाइस", "उनन्तीस", "तीस",
+            "एकतीस", "बतीस", "तेतीस", "चौतीस", "पैतीस", "छतीस", "सरतीस", "अरतीस", "उननचालीस", "चालीस",
+            "एकचालीस", "बयालिस", "तीरचालीस", "चौवालिस", "पैंतालिस", "छयालिस", "सरचालीस", "अरचालीस", "उननचास", "पचास",
+            "एकाउन्न", "बाउन्न", "त्रिपन्न", "चौवन्न", "पच्पन्न", "छपन्न", "सन्ताउन्न", "अन्ठाउँन्न", "उनान्न्साठी", "साठी",
+            "एकसाठी", "बासाठी", "तीरसाठी", "चौंसाठी", "पैसाठी", "छैसठी", "सत्सठ्ठी", "अर्सठ्ठी", "उनन्सत्तरी", "सतरी",
+            "एकहत्तर", "बहत्तर", "त्रिहत्तर", "चौहत्तर", "पचहत्तर", "छहत्तर", "सत्हत्तर", "अठ्हत्तर", "उनास्सी", "अस्सी",
+            "एकासी", "बयासी", "त्रीयासी", "चौरासी", "पचासी", "छयासी", "सतासी", "अठासी", "उनान्नब्बे", "नब्बे",
+            "एकान्नब्बे", "बयान्नब्बे", "त्रियान्नब्बे", "चौरान्नब्बे", "पंचान्नब्बे", "छयान्नब्बे", "सन्तान्‍नब्बे", "अन्ठान्नब्बे", "उनान्सय"
         };
+
+        public static readonly string[] ScaleDevnagari = { "", ";o", "xhf/", "nfv", "s/f]8", "c/a", "v/a", "gLn", "kß", "z+v", "pkfw", "c+s", "hNb", "dw", "k/w{", "cGt", "dxfcGt", "lzzGt", "l;+3/", "dxfl;+x/", "cbGt l;+x/" };
+
+        public static readonly string[] ScaleEng = { "", "hundred", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion", "undecillion", "duodecillion " };
+
+        public static readonly string[] ScaleHindi = { "", "सौ", "हजार", "लाख", "करोड़", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
+
+        public static readonly string[] ScaleNep = { "", "सय", "हजार", "लाख", "करोड", "अरब", "खरब", "नील", "पद्म", "शंख", "उपाध", "अंक", "जल्द", "मध", "परर्ध", "अन्त", "महाअन्त", "शिशन्त", "सिंघर", "महासिंहर", "अदन्त सिंहर" };
+
+        public static readonly string[] ScaleNepEnglish = { "", "hundred", "thousand", "lakh", "crore", "arba", "kharba", "neel", "padma", "shankha", "Upadh", "Anka", "Jald", "Madh", "Parardha", "Anta", "Mahaanta", "Shishanta", "Singhar", "Maha Singhar", "Adanta Singhar" }; //Pow(10,39)
+
+        public static readonly string[] TensDevnagari = { "", "b;", "aL;", "tL;", "rfnL;", "krf;", ";f7L", ";t/L", "c:;L", "gAa]" };
+
+        public static readonly string[] TensEnglish = { "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+
+        public static readonly string[] TensHindi = { "", "दस", "बीस", "तीस", "चालीस", "पचास", "साठ", "सत्तर", "अस्सी", "नब्बे" };
+
+        //NEPALI WORDS RESOURCE
+        public static readonly string[] TensNep = { "", "दस", "बीस", "तीस", "चालीस", "पचास", "साठी", "सतरी", "अस्सी", "नब्बे" };
+
     }
 }
