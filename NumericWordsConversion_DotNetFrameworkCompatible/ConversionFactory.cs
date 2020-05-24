@@ -80,10 +80,10 @@ namespace NumericWordsConversion
             if (digits == "0") return _ones[0];
             StringBuilder builder = new StringBuilder();
             int scaleMapIndex;
-            if (_options.Culture == Culture.International)
-                scaleMapIndex = (int)Math.Ceiling((decimal)digits.Length / 3);
-            else
+            if (_options.Culture == Culture.Nepali || _options.Culture == Culture.Hindi)
                 scaleMapIndex = (digits.Length - 3) < 1 ? 1 : digits.Length / 2;
+            else
+                scaleMapIndex = (int)Math.Ceiling((decimal)digits.Length / 3);
             for (int i = scaleMapIndex; i > 0; i--)
             {
                 string inWords;
@@ -95,19 +95,19 @@ namespace NumericWordsConversion
                             builder.Append(Concat(inWords.Trim(), " "));
                         break;
                     default: //For Everything Greater than hundreds
-                        if (_options.Culture == Culture.International)
-                        {
-                            int length = (digits.Length % ((i - 1) * 3 + 1)) + 1;
-                            string hundreds = digits.Substring(0, length);
-                            digits = digits.Remove(0, length);
-                            inWords = ToHundredthWords(hundreds);
-                        }
-                        else
+                        if (_options.Culture == Culture.Nepali || _options.Culture == Culture.Hindi)
                         {
                             int length = (digits.Length % 2 == 0) ? 1 : 2;
                             string hundreds = digits.Substring(0, length);
                             digits = digits.Remove(0, length);
                             inWords = ToTensWord(hundreds);
+                        }
+                        else
+                        {
+                            int length = (digits.Length % ((i - 1) * 3 + 1)) + 1;
+                            string hundreds = digits.Substring(0, length);
+                            digits = digits.Remove(0, length);
+                            inWords = ToHundredthWords(hundreds);
                         }
 
                         if (!IsNullOrEmpty(inWords.Trim()))

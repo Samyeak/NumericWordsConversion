@@ -26,6 +26,10 @@
         public CurrencyWordsConverter(CurrencyWordsConversionOptions options)
         {
             this._options = options;
+            if (!(_options.Culture == Culture.Nepali || _options.Culture == Culture.Hindi) && _options.OutputFormat != OutputFormat.English)
+            {
+                throw new System.Exception("Output Format not compatible with specified culture");
+            }
             _conversionFactory = Utilities.InitializeConversionFactory(_options);
         }
         #endregion

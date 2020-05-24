@@ -61,6 +61,7 @@ namespace NumericWordsConversion
                     }
                     break;
                 case Culture.International:
+                case Culture.Bhutanese:
                     scale = WordResources.ScaleEng;
                     ones = WordResources.OnesEnglish;
                     tens = WordResources.TensEnglish;

@@ -16,6 +16,10 @@
     /// <summary>
     /// Uses the Hindi Numeral System for Words Conversion
     /// </summary>
-        Hindi
+        Hindi,
+        /// <summary>
+        /// Uses the Bhutanese Numeral System for Words Conversion
+        /// </summary>
+        Bhutanese
     }
 }

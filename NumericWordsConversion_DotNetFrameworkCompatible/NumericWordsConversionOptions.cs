@@ -36,17 +36,28 @@ namespace NumericWordsConversion
         /// </summary>
         public string DecimalSeparator
         {
-            get => _decimalSeparator ?? (Culture, OutputFormat) switch
-            {
-                (Culture.International, _) => "point",
-                (Culture.Nepali, OutputFormat.English) => "point",
-                (Culture.Nepali, OutputFormat.Devnagari) => "bzdnj",
-                (Culture.Nepali, OutputFormat.Unicode) => "दशमलव",
-                (Culture.Hindi, OutputFormat.English) => "point",
-                (Culture.Hindi, OutputFormat.Devnagari) => "bzdnj",
-                (Culture.Hindi, OutputFormat.Unicode) => "दशमलव",
-                _ => throw new ArgumentOutOfRangeException(nameof(Culture))
-            };
+            get {
+                if (_decimalSeparator != null)
+                {
+                    return _decimalSeparator;
+                }
+                string separator;
+                switch (OutputFormat)
+                {
+                    case OutputFormat.English:
+                        separator = "point";
+                        break;
+                    case OutputFormat.Devnagari:
+                        separator = "bzdnj";
+                        break;
+                    case OutputFormat.Unicode:
+                        separator = "दशमलव";
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(Culture));
+                }
+                return separator;
+            }
             set => _decimalSeparator = value;
         }
 
@@ -56,6 +67,12 @@ namespace NumericWordsConversion
         /// In order to use generic algorithm for all the numeral system,
         /// this is used to map suitable resources as per different numeral system
         /// </summary>
-        internal int ResourceLimitIndex => this.OutputFormat == OutputFormat.English ? 20 : 100;
+        internal int ResourceLimitIndex
+        {
+            get
+            {
+                return (this.OutputFormat != OutputFormat.English && (this.Culture == Culture.Nepali && this.Culture == Culture.Hindi)) ? 100 : 20;
+            }
+        }
     }
 }

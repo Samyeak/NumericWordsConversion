@@ -67,8 +67,11 @@ namespace NumericWordsConversion
             {(Culture.International, OutputFormat.English), ("dollar", "cents", "only")},
             {(Culture.Nepali, OutputFormat.English), ("rupees", "paisa", "only")},
             {(Culture.Nepali, OutputFormat.Unicode), ("रूपैयाँ", "पैसा", "मात्र")},
-            {(Culture.Nepali, OutputFormat.Devnagari), ("¿k}ofF", "k};f", "dfq")}
-            //TODO: ADD FOR HINDI
+            {(Culture.Nepali, OutputFormat.Devnagari), ("¿k}ofF", "k};f", "dfq")},
+            {(Culture.Bhutanese, OutputFormat.English), ("ngultrums", "chetrums", "only")},
+            {(Culture.Hindi, OutputFormat.English), ("rupees", "paisa", "only")},
+            {(Culture.Hindi, OutputFormat.Unicode), ("रूपैयाँ", "पैसा", "मात्र")},
+            {(Culture.Hindi, OutputFormat.Devnagari), ("¿k}ofF", "k};f", "dfq")}
         };
     }
 }
