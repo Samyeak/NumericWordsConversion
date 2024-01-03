@@ -16,7 +16,7 @@
         /// </summary>
         public CurrencyWordsConverter()
         {
-            this._options = GlobalOptions.CurrencyWordsOptions;
+            _options = GlobalOptions.CurrencyWordsOptions;
             _conversionFactory = Utilities.InitializeConversionFactory(_options);
         }
 
@@ -25,7 +25,7 @@
         /// </summary>
         public CurrencyWordsConverter(CurrencyWordsConversionOptions options)
         {
-            this._options = options;
+            _options = options;
             _conversionFactory = Utilities.InitializeConversionFactory(_options);
         }
         #endregion
@@ -47,10 +47,10 @@
                                                     CultureInfo.InvariantCulture)
                                                 .Split('.')
                                                 .ElementAtOrDefault(1) ?? Empty;
-            if (decimal.Parse(integralDigitsString) <= 0 && decimal.Parse(fractionalDigitsString) <= 0) return Empty;
+            if (decimal.Parse(integralDigitsString, CultureInfo.InvariantCulture) <= 0 && decimal.Parse(fractionalDigitsString, CultureInfo.InvariantCulture) <= 0) return Empty;
 
             string integralWords = Empty;
-            if (decimal.Parse(integralDigitsString) > 0)
+            if (decimal.Parse(integralDigitsString, CultureInfo.InvariantCulture) > 0)
             {
                 integralWords = _conversionFactory.ConvertDigits(integralDigitsString);
                 integralWords = _options.CurrencyNotationType == NotationType.Prefix
@@ -58,7 +58,7 @@
                     : integralWords + " " + _options.CurrencyUnit;
             }
 
-            if (int.Parse(fractionalDigitsString) <= 0 || IsNullOrEmpty(fractionalDigitsString)) return Concat(integralWords, (IsNullOrEmpty(_options.EndOfWordsMarker) ? "" : " " + _options.EndOfWordsMarker)).CapitalizeFirstLetter();
+            if (int.Parse(fractionalDigitsString) <= 0 || IsNullOrEmpty(fractionalDigitsString)) return Concat(integralWords, IsNullOrEmpty(_options.EndOfWordsMarker) ? "" : " " + _options.EndOfWordsMarker).CapitalizeFirstLetter();
 
             string fractionalWords = _conversionFactory.ConvertDigits(fractionalDigitsString);
             fractionalWords = _options.SubCurrencyNotationType == NotationType.Prefix

@@ -83,7 +83,7 @@ namespace NumericWordsConversion
             if (_options.Culture == Culture.International)
                 scaleMapIndex = (int)Math.Ceiling((decimal)digits.Length / 3);
             else
-                scaleMapIndex = (digits.Length - 3) < 1 ? 1 : digits.Length / 2;
+                scaleMapIndex = digits.Length - 3 < 1 ? 1 : digits.Length / 2;
             for (int i = scaleMapIndex; i > 0; i--)
             {
                 string inWords;
@@ -97,14 +97,14 @@ namespace NumericWordsConversion
                     default: //For Everything Greater than hundreds
                         if (_options.Culture == Culture.International)
                         {
-                            int length = (digits.Length % ((i - 1) * 3 + 1)) + 1;
+                            int length = digits.Length % ((i - 1) * 3 + 1) + 1;
                             string hundreds = digits.Substring(0, length);
                             digits = digits.Remove(0, length);
                             inWords = ToHundredthWords(hundreds);
                         }
                         else
                         {
-                            int length = (digits.Length % 2 == 0) ? 1 : 2;
+                            int length = digits.Length % 2 == 0 ? 1 : 2;
                             string hundreds = digits.Substring(0, length);
                             digits = digits.Remove(0, length);
                             inWords = ToTensWord(hundreds);

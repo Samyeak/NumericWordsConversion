@@ -1,35 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Samyeak Maharjan</Authors>
-    <Description>Numeric Words Conversion is a C# library for converting numeric into words. The goal is to create a simple customizable library which can easily be used to convert any numbers or currencies to words. Supports Nepali, Hindi and International Numeral System out of the box.</Description>
-    <Copyright>Samyeak Maharjan</Copyright>
-    <NeutralLanguage>en</NeutralLanguage>
-    <Version>2.0.0.0</Version>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/Samyeak/NumericWordsConversion.git</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Samyeak/NumericWordsConversion.git</RepositoryUrl>
-    <RepositoryType>github</RepositoryType>
-    <PackageTags>NumberToText;Numeric; NumericToWords; CurrencyToWords; InWords; Currency In Words; Number In Words; ToWords; AmountToWords; Nepali; Devnagari; Unicode; DecimalToWords; Nepali Number To Words; Amount To Words; Hindi Number To Words; Hindi Currency To Text</PackageTags>
-    <PackageReleaseNotes>* Added Application Level Configuration
-* Added Hindi Numeral System</PackageReleaseNotes>
-    <SignAssembly>false</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>NumericWordsConversionSignatureKey.snk</AssemblyOriginatorKeyFile>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageIconUrl>https://repository-images.githubusercontent.com/233162696/d06bb100-4545-11ea-8853-f816e055791a</PackageIconUrl>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>true</Optimize>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
+    <None Include="..\LICENSE" Link="LICENSE">
       <PackagePath></PackagePath>
+      <Pack>True</Pack>
     </None>
   </ItemGroup>
 

@@ -34,7 +34,7 @@ namespace NumericWordsConversion
         public static NumericWordsConverter NumericWordsConverter { get; internal set; } = new NumericWordsConverter(NumericWordsOptions);
 
         public static CurrencyWordsConverter CurrencyWordsConverter { get; internal set; } = new CurrencyWordsConverter(CurrencyWordsOptions);
-}
+    }
 
     public class OptionsInitializer
     {

@@ -22,7 +22,7 @@ namespace NumericWordsConversion
         /// </summary>
         public NumericWordsConverter()
         {
-            this._options = GlobalOptions.NumericWordsOptions;
+            _options = GlobalOptions.NumericWordsOptions;
             _conversionFactory = Utilities.InitializeConversionFactory(_options);
         }
 
@@ -31,7 +31,7 @@ namespace NumericWordsConversion
         /// </summary>
         public NumericWordsConverter(NumericWordsConversionOptions options)
         {
-            this._options = options;
+            _options = options;
             _conversionFactory = Utilities.InitializeConversionFactory(_options);
         }
         #endregion
@@ -45,13 +45,12 @@ namespace NumericWordsConversion
         {
             string integralDigitsString = number
                 .ToString(CultureInfo.InvariantCulture)
-                .Split('.')
-                .ElementAt(0);
+                .Split('.')[0];
 
             decimal fractionalDigits = number % 1;
 
             string integralWords = _conversionFactory.ConvertDigits(integralDigitsString);
-            string fractionalDigitsString = (_options.DecimalPlaces > -1 ? decimal.Parse(fractionalDigits.ToString($"F{_options.DecimalPlaces}", CultureInfo.InvariantCulture))
+            string fractionalDigitsString = (_options.DecimalPlaces > -1 ? decimal.Parse(fractionalDigits.ToString($"F{_options.DecimalPlaces}", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)
                 .ToString($"G{_options.DecimalPlaces}", CultureInfo.InvariantCulture)
                 : fractionalDigits.ToString("G", CultureInfo.InvariantCulture)
                 )
