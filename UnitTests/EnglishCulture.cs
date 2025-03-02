@@ -25,7 +25,7 @@ namespace UnitTests
         public void DecimalOnly(decimal amount, string words)
         {
             string result = amount.ToCurrencyWords();
-            Assert.AreEqual(words, result);
+            Assert.That(Is.Equals(words, result));
         }
 
         [Test, TestCaseSource(nameof(TestCases))]

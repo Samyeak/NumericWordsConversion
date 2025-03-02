@@ -22,7 +22,7 @@ namespace UnitTests
         {
             string actualResult = AmtToWords.ToWords(32152M);
             string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ मात्र";
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace UnitTests
             //Act
             string actualResult = AmtToWords.ToWords(32152.01M);
             //Assert
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace UnitTests
         {
             string actualResult = AmtToWords.ToWords(32152.10M);
             string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ दस पैसा मात्र";
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace UnitTests
         {
             string actualResult = AmtToWords.ToWords(32152.11M);
             string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ एघार पैसा मात्र";
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace UnitTests
         {
             string actualResult = AmtToWords.ToWords(32152.30M);
             string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ तीस पैसा मात्र";
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace UnitTests
         {
             string actualResult = AmtToWords.ToWords(32152.88M);
             string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ अठासी पैसा मात्र";
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
     }

@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using NumericWordsConversion;
+﻿using NumericWordsConversion;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -16,7 +15,7 @@ namespace UnitTests
                 OutputFormat = OutputFormat.English
             });
             string result = amt.ToWords(amount);
-            Assert.AreEqual(words, result);
+            Assert.That(Is.Equals(words, result));
         }
 
         private static readonly object[] WordCases =

@@ -24,7 +24,7 @@ namespace UnitTests
             decimal amt = 30246.20M;
             string expectedResult = "तीस हजार दुई सय छयालिस रूपैयाँ बीस पैसा मात्र";
             string actualResult = amt.ToCurrencyWords();
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
         [Test]
         public void ShankhaExtension()
@@ -32,7 +32,7 @@ namespace UnitTests
             decimal amt = 88_77_66_55_44_33_22_11_321M;
             string expectedResult = "अठासी शंख सत्हत्तर पद्म छैसठी नील पच्पन्न खरब चौवालिस अरब तेतीस करोड बाइस लाख एघार हजार तीन सय एकाइस रूपैयाँ मात्र";
             string actualResult = amt.ToCurrencyWords();
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace UnitTests
             decimal amt = 77_66_55_44_33_22_11_321.88123456789M;
             string expectedResult = "सत्हत्तर पद्म छैसठी नील पच्पन्न खरब चौवालिस अरब तेतीस करोड बाइस लाख एघार हजार तीन सय एकाइस रूपैयाँ अठासी पैसा मात्र";
             string actualResult = amt.ToCurrencyWords();
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace UnitTests
             string expectedResult = "अठासी पैसा मात्र";
 
             string actualResult = amt.ToCurrencyWords();
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace UnitTests
             decimal amt = 32152.88M;
             string actualResult = amt.ToCurrencyWords();
             string expectedResult = "बतीस हजार एक सय बाउन्न रूपैयाँ अठासी पैसा मात्र";
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(Is.Equals(expectedResult, actualResult));
         }
     }
 }
