@@ -4,14 +4,34 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<RootNamespace>NumericWordsConversion</RootNamespace>
 		<Nullable>enable</Nullable>
-		<Version>2.0.0</Version>
+
+		<!-- Package Identity -->
+		<Version>2.1.1</Version>
+
+		<!-- Package Metadata -->
+		<Title>Numeric Words Conversion</Title>
+		<Description>Numeric Words Conversion is a C# library for converting numeric into words. The goal is to create a simple customizable library which can easily be used to convert any numbers or currencies to words. Supports Nepali, Hindi and International Numeral System out of the box.</Description>
+		<Authors>Samyeak Maharjan</Authors>
+
+		<!-- Release Notes -->
+		<PackageReleaseNotes>
+			Release with support for all .NET versions upto 10, .NET Standard 2.0, and .NET Framework 4.8.
+		</PackageReleaseNotes>
+		<PackageTags>NumberToText;Numeric;NumericToWords;CurrencyToWords;InWords;Currency;In;Words;Number;In;Words;ToWords;AmountToWords;Nepali;Devnagari;Unicode;DecimalToWords;Nepali;Number;To;Words;Amount;To;Words;Hindi;Number;To;Words;Hindi;Currency;To;Text</PackageTags>
+
+		<!-- Project & Repository Links -->
+		<PackageProjectUrl>https://github.com/Samyeak/NumericWordsConversion</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Samyeak/NumericWordsConversion.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+
+		<!-- License (GPL-3.0) -->
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\LICENSE" Link="LICENSE">
-			<PackagePath></PackagePath>
-			<Pack>True</Pack>
-		</None>
+		<None Include="..\LICENSE" Pack="true" PackagePath=""/>
+		<None Include="..\README.md" Pack="true" PackagePath=""/>
 	</ItemGroup>
 
 </Project>
